@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>库存管理系统</title>
+	<link href="./assets/css/materialize.min.css" rel="stylesheet">
+	<link href="./assets/css/style.css" rel="stylesheet">
+	<link rel="shortcut icon" href="./assets/pictures/icon.png">
+</head>
+
+<body>
+	<div class="loading" id="loading">
+		<div class="preloader-wrapper active loadingCircle">
+			<div class="spinner-layer spinner-blue">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-red">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-yellow">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-green">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<nav>
+		<div class="nav-wrapper">
+			<div class="brand-logo">库存管理系统</div>
+			<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="#add">添加货物</a></li>
+				<li><a href="#search"">更新货物信息</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-menu">
+				<li><a href="#add">添加货物</a></li>
+				<li><a href="#search"">更新货物信息</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<form id="add" class="modal">
+		<div class="modal-content">
+			<h5 id="inventoryHeader">添加货物</h5>
+			<div id="addInit">
+				<div class="row">
+					<div class="input-field col s12">
+						<input name="barcode" id="barcode" type="text" class="validate">
+						<label for="barcode">请输入待添加商品的条形码</label>
+					</div>					
+				</div>
+
+				<div class="center-align">
+					<a onclick="getData()" class="waves-effect waves-light btn">获取货物信息</a>
+					<a onclick="inputData()" class="waves-effect waves-light btn">手动录入数据</a>
+				</div>
+			</div>
+
+			<div class="progress" id="progress">
+				<div class="indeterminate"></div>
+			</div>
+
+			<div class="itemInfo" id="itemInfo" class="center-align">
+				<div class="row">
+					<div class="input-field col s2">
+						<input name="supplierID" id="supplierID" type="text" class="validate">
+						<label for="supplierID">供货商 ID</label>
+					</div>
+					<div class="input-field col s2">
+						<input name="brand" id="brand" type="text" class="validate">
+						<label for="brand">商标</label>
+					</div>
+					<div class="input-field col s3">
+						<input name="name" id="name" type="text" class="validate">
+						<label for="name">商品名</label>
+					</div>
+					<div class="input-field col s5">
+						<input name="unspsc" id="unspsc" type="text" class="validate">
+						<label for="unspsc">分类</label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s2">
+						<input name="type" id="type" type="text" class="validate">
+						<label for="type">规格</label>
+					</div>
+					<div class="input-field col s2">
+						<input name="price" id="price" type="text" class="validate">
+						<label for="price">进货价</label>
+					</div>
+					<div class="input-field col s2">
+						<input name="salePrice" id="salePrice" type="text" class="validate">
+						<label for="salePrice">售价</label>
+					</div>
+					<div class="input-field col s2">
+						<input name="expiredTime" type="date" class="datepicker" id="expiredTime">
+						<label for="expiredTime">过期时间</label>
+					</div>
+					<div class="input-field col s2">
+						<input name="inventoryQuantity" id="inventoryQuantity" type="number" class="validate">
+						<label for="inventoryQuantity">库存量</label>
+					</div>
+					<div class="input-field col s2">
+						<input name="threshold" id="threshold" type="number" class="validate" value="50">
+						<label for="threshold" active>报警阈值</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button id="inventoryBtn" class="btn-flat" type="submit">确认添加</button>
+		</div>
+	</form>
+
+	<div id="search" class="modal">
+		<div class="modal-content">
+			<h5>搜索货物信息</h5>
+			<div class="row">
+				<div class="input-field col s12">
+					<input name="itemID" id="itemID" type="text" class="validate">
+					<label for="itemID">请输入商品 ID </label>
+				</div>		
+			</div>
+
+			<div class="center-align">
+				<button href="#" onclick="update()" class="waves-effect waves-light btn">确定</button>
+			</div>
+		</div>
+	</div>
+
+    <table class="highlight responsive-table">
+    	<thead>
+    		<tr>
+    			<th>商品 ID </th>
+    			<th>条形码</th>
+    			<th>商标</th>
+    			<th>商品名</th>
+    			<th>分类</th>
+    			<th>规格</th>
+    			<th>进货价</th>
+    			<th>售价</th>
+    			<th>库存量</th>
+    			<th>报警阈值</th>
+    			<th>过期时间</th>
+    			<th>入库时间</th>
+    			<th>更新时间</th>
+    		</tr>
+    	</thead>
+
+    	<tbody id="display"></tbody>
+    </table>
+
+
+
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/materialize.min.js"></script>
+	<script src="./assets/js/inventory.js"></script>
+</body>
+
+</html>

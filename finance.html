@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>财务管理系统</title>
+	<link href="./assets/css/materialize.min.css" rel="stylesheet">
+	<link href="./assets/css/style.css" rel="stylesheet">
+	<link rel="shortcut icon" href="./assets/pictures/icon.png">
+</head>
+
+<body>
+	<div class="loading" id="loading">
+		<div class="preloader-wrapper active loadingCircle">
+			<div class="spinner-layer spinner-blue">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-red">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-yellow">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-green">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<nav>
+		<div class="nav-wrapper">
+			<div class="brand-logo">财务管理系统</div>
+			<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="#finance">增加财务流水</a></li>
+				<li><a href="./report">查看财务报表</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-menu">
+				<li><a href="#finance">增加财务流水</a></li>
+				<li><a href="./report">查看财务报表</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<form id="finance" class="modal">
+		<div class="modal-content">
+			<h5>增加财务流水</h5>
+
+			<div class="row">
+				<div class="input-field col s4">
+					<input name="financeName" id="financeName" type="text" class="validate" required="" />
+					<label for="financeName">项目名</label>
+				</div>
+
+				<div class="input-field col s4">
+					<input name="income" id="income" type="number" class="validate" required="" />
+					<label for="income">收入</label>
+				</div>
+
+				<div class="input-field col s4">
+					<input name="expenditure" id="expenditure" type="number" class="validate" required="" />
+					<label for="expenditure">支出</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn-flat" type="submit">确认添加</button>
+		</div>
+	</form>
+
+    <table class="highlight responsive-table">
+    	<thead>
+    		<tr>
+    			<th>流水号</th>
+    			<th>项目名 </th>
+    			<th>收入</th>
+    			<th>支出</th>
+    			<th>年</th>
+    			<th>月</th>
+    			<th>日</th>
+    		</tr>
+    	</thead>
+    	<tbody id="display"></tbody>
+    </table>
+
+
+
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/materialize.min.js"></script>
+	<script src="./assets/js/finance.js"></script>
+</body>
+
+</html>

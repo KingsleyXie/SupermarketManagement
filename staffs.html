@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>员工管理系统</title>
+	<link href="./assets/css/materialize.min.css" rel="stylesheet">
+	<link href="./assets/css/style.css" rel="stylesheet">
+	<link rel="shortcut icon" href="./assets/pictures/icon.png">
+</head>
+
+<body>
+	<div class="loading" id="loading">
+		<div class="preloader-wrapper active loadingCircle">
+			<div class="spinner-layer spinner-blue">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-red">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-yellow">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-green">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<nav>
+		<div class="nav-wrapper">
+			<div class="brand-logo">员工管理系统</div>
+			<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="#staff">增加一名员工</a></li>
+				<li><a href="#search">查询或修改员工信息</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-menu">
+				<li><a href="#staff">增加一名员工</a></li>
+				<li><a href="#search">查询或修改员工信息</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<div id="search" class="modal">
+		<div class="modal-content">
+			<h5>搜索员工信息</h5>
+			<div class="row">
+				<div class="input-field col s12">
+					<input name="ID" id="ID" type="text" class="validate">
+					<label for="ID">请输入员工 ID </label>
+				</div>					
+			</div>
+
+			<div class="center-align">
+				<button href="#" onclick="update()" class="waves-effect waves-light btn">确定</button>
+			</div>
+		</div>
+	</div>
+
+	<form id="staff" class="modal">
+		<div class="modal-content">
+			<h5 id="staffHeader">增加一名员工</h5>
+			<div class="row">
+				<div class="input-field col s3">
+					<input name="name" id="name" type="text" class="validate" required="" />
+					<label for="name">姓名</label>
+				</div>
+				<div class="input-field col s2 selection">
+					<select name="gender" id="gender">
+						<option value="" disabled selected>性别</option>
+						<option value="男">男</option>
+						<option value="女">女</option>
+					</select>
+				</div>
+				<div class="input-field col s3">
+					<input name="jobNo" id="jobNo" type="number" class="validate" required="" />
+					<label for="jobNo">工号</label>
+				</div>
+				<div class="input-field col s2">
+					<label for="birthday">出生日期</label>
+					<input name="birthday" type="date" class="datepicker" id="birthday" >
+				</div>
+				<div class="input-field col s2 selection">
+					<select name="status" id="status">
+						<option value="" disabled selected>状态</option>
+						<option value="在职">在职</option>
+						<option value="假期">假期</option>
+						<option value="跑路">跑路</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s2">
+					<input name="nation" id="nation" type="text" class="validate" required="" />
+					<label for="nation">民族</label>
+				</div>
+				<div class="input-field col s2">
+					<input name="nativePlace" id="nativePlace" type="text" class="validate" required="" />
+					<label for="nativePlace">籍贯</label>
+				</div>
+				<div class="input-field col s3">
+					<input name="contact" id="contact" type="text" class="validate" required="" />
+					<label for="contact">联系方式</label>
+				</div>
+				<div class="input-field col s5">
+					<input name="address" id="address" type="text" class="validate" required="" />
+					<label for="address">家庭住址</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s3 selection">
+					<select name="department" id="department">
+						<option value="" disabled selected>部门</option>
+						<option value="领导管理层">领导管理层</option>
+						<option value="物资采购部">物资采购部</option>
+						<option value="库存管理部">库存管理部</option>
+						<option value="销售部">销售部</option>
+						<option value="财务部">财务部</option>
+						<option value="人事部">人事部</option>
+					</select>
+				</div>
+				<div class="input-field col s3">
+					<input name="postion" id="postion" type="text" class="validate" required="" />
+					<label for="postion">职位</label>
+				</div>
+				<div class="input-field col s3">
+					<input name="salary" id="salary" type="number" class="validate" required="" />
+					<label for="salary">月薪</label>
+				</div>
+				<div class="input-field col s3">
+					<input name="entryTime" type="date" class="datepicker" id="entryTime">
+					<label for="entryTime">入职日期</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn-flat" id="staffBtn" type="submit">确认添加</button>
+		</div>
+	</form>
+
+    <table class="highlight responsive-table">
+    	<thead>
+    		<tr>
+    			<th>员工 ID</th>
+    			<th>工号</th>
+    			<th>姓名</th>
+    			<th>性别</th>
+    			<th>民族</th>
+    			<th>籍贯</th>
+    			<th>部门</th>
+    			<th>职位</th>
+    			<th>生日</th>
+    			<th>联系方式</th>
+    			<th>家庭地址</th>
+    			<th>月薪</th>
+    			<th>入职时间</th>
+    			<th>状态</th>
+    		</tr>
+    	</thead>
+    	<tbody id="display"></tbody>
+    </table>
+
+
+
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/materialize.min.js"></script>
+	<script src="./assets/js/staffs.js"></script>
+</body>
+
+</html>

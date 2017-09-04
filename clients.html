@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>客户管理系统</title>
+	<link href="./assets/css/materialize.min.css" rel="stylesheet">
+	<link href="./assets/css/style.css" rel="stylesheet">
+	<link rel="shortcut icon" href="./assets/pictures/icon.png">
+</head>
+
+<body>
+	<div class="loading" id="loading">
+		<div class="preloader-wrapper active loadingCircle">
+			<div class="spinner-layer spinner-blue">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-red">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-yellow">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-green">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<nav>
+		<div class="nav-wrapper">
+			<div class="brand-logo">客户管理系统</div>
+			<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="#" onclick="suppliersPY()">供货商交易记录</a></li>
+				<li><a href="#" onclick="customersPY()">超市会员信息</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-menu">
+				<li><a href="#" onclick="suppliersPY()">供货商交易记录</a></li>
+				<li><a href="#" onclick="customersPY()">超市会员信息</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div id="display">
+		<div class="row placeholder">
+			<a href="#">
+				<div class="col s12 m5" id="suppliersPY">
+					<div class="card">
+						<div class="card-image" >
+							<img class="placeholder-image" src="./assets/pictures/suppliers.jpg">
+							<span class="card-title black-text">供货商交易记录</span>
+						</div>
+					</div>
+				</div>
+			</a>
+
+			<a href="#">
+				<div class="col s12 m5 right" id="customersPY">
+					<div class="card">
+						<div class="card-image">
+							<img class="placeholder-image" src="./assets/pictures/customers.jpg">
+							<span class="card-title black-text">超市会员信息</span>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+
+
+
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/materialize.min.js"></script>
+	<script src="./assets/js/clients.js"></script>
+</body>
+
+</html>

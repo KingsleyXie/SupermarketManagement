@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>财务报表</title>
+	<link href="./assets/css/materialize.min.css" rel="stylesheet">
+	<link href="./assets/css/style.css" rel="stylesheet">
+	<link rel="shortcut icon" href="./assets/pictures/icon.png">
+</head>
+
+<body>
+	<div class="loading" id="loading">
+		<div class="preloader-wrapper active loadingCircle">
+			<div class="spinner-layer spinner-blue">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-red">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-yellow">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-green">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<nav class="report">
+		<div class="nav-wrapper">
+			<div class="brand-logo">财务报表</div>
+			<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="./finance">财务流水明细</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-menu">
+				<li><a href="./finance">财务流水明细</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+		</div>
+	</nav>
+
+    <div id="diagram1" class="diagram"></div>
+    <div id="diagram2" class="diagram"></div>
+    <div id="diagram3" class="diagram"></div>
+    <div id="diagram4" class="diagram"></div>
+
+
+
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/materialize.min.js"></script>
+	<script src="./assets/js/canvasjs.min.js"></script>
+	<script src="./assets/js/report.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>销售管理系统</title>
+	<link href="./assets/css/materialize.min.css" rel="stylesheet">
+	<link href="./assets/css/style.css" rel="stylesheet">
+	<link rel="shortcut icon" href="./assets/pictures/icon.png">
+</head>
+
+<body>
+	<nav>
+		<div class="nav-wrapper">
+			<div class="brand-logo">销售管理系统</div>
+			<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="#sell">购物</a></li>
+				<li><a href="#return">退货</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-menu">
+				<li><a href="#sell">购物</a></li>
+				<li><a href="#return">退货</a></li>
+				<li><a href="./">返回主页</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="row placeholder">
+		<a href="#sell">
+			<div class="col s12 m5">
+				<div class="card">
+					<div class="card-image" >
+						<img class="placeholder-image" src="./assets/pictures/sell.jpg">
+						<span class="card-title">购买</span>
+					</div>
+				</div>
+			</div>
+		</a>
+
+		<a href="#return">
+			<div class="col s12 m5 right">
+				<div class="card">
+					<div class="card-image">
+						<img class="placeholder-image" src="./assets/pictures/return.jpg">
+						<span class="card-title">退货</span>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+
+	
+
+	<form id="sell">	
+		<div id="sell" class="modal">
+			<div class="modal-content">
+				<h5>购买商品</h5>
+				<div class="row">
+					<div class="input-field col s6">
+						<input name="itemID" id="itemID" type="text" class="validate">
+						<label for="itemID">请输入商品 ID </label>
+					</div>	
+					<div class="input-field col s6">
+						<input name="customerID" id="customerID" type="text" class="validate">
+						<label for="customerID">请输入用户 ID </label>
+					</div>	
+				</div>
+				<div class="center-align">
+					<button href="#" class="waves-effect waves-light btn" type="submit">确定</button>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<form id="return">	
+		<div id="return" class="modal">
+			<div class="modal-content">
+				<h5>退货</h5>
+				<div class="row">
+					<div class="input-field col s6">
+						<input name="itemID" id="itemID" type="text" class="validate">
+						<label for="itemID">请输入商品 ID </label>
+					</div>	
+					<div class="input-field col s6">
+						<input name="customerID" id="customerID" type="text" class="validate">
+						<label for="customerID">请输入用户 ID </label>
+					</div>	
+				</div>
+				<div class="center-align">
+					<button href="#" class="waves-effect waves-light btn" type="submit">确定</button>
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/materialize.min.js"></script>
+	<script src="./assets/js/sales.js"></script>
+</body>
+
+</html>
