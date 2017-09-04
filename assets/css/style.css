@@ -7,8 +7,8 @@ th {
     background-image: url(../pictures/background.jpg);
 }
 .system-title {
-	margin-top: 1rem;
-	margin-bottom: 1.5rem;
+	margin-top: 5px;
+	margin-bottom: 10px;
 	font-size: 2.7rem;
 	text-align: center;
 	color: #fff;
@@ -69,4 +69,13 @@ nav .report {
      width: 100%;
      margin-top: 100px;
      margin-bottom: 30px;
+}
+
+.copyright {
+    color: #fff;
+    font-size: 15px;
+    text-align: center;
+}
+.copyright a {
+    color: inherit;
 }
