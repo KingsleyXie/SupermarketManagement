@@ -1,8 +1,9 @@
 th {
-    font-weight: 500;
+    font-weight: normal;
 }
+
 .index-page {
-    background-position:center;
+    background-position: center;
     background-image: url(../pictures/background.jpg);
 }
 .system-title {
@@ -12,15 +13,17 @@ th {
 	text-align: center;
 	color: #fff;
 }
-.sub-system-cover:after {
+
+.subsystem-cover:after {
     position: absolute;
     content: '';
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    box-shadow:0 0 30px 1px rgba(255,255,255,0.7) inset;
+    box-shadow: 0 0 30px 1px rgba(255,255,255,0.7) inset;
 }
+
 .loading {
     display: none;
     align-items: center;
@@ -33,14 +36,16 @@ th {
     width: 100%;
     height: 100%;
 }
-.loadingCircle {
+.loading-circle {
     width: 120px;
     height: 120px;
     z-index: 2006;
 }
+
 .progress {
     display: none;
 }
+
 .placeholder {
     margin-top: 10%;
     margin-left: 30px;
@@ -49,10 +54,12 @@ th {
 .placeholder-image {
     height: 360px;
 }
-.itemInfo {
+
+.item-info {
     display: none;
 }
-nav.report {
+
+nav .report {
     position: fixed;
     z-index: 1000;
     top: 0;
