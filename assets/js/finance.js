@@ -28,7 +28,7 @@ $(document).ready(function() {
 			success: function(response) {
 				if (response.code == 0) {
 					Materialize.toast('财务流水添加成功！', 1700);
-					window.setTimeout(function () {
+					setTimeout(function () {
 						$("#finance").modal('close');
 						display();
 					}, 2000);
@@ -48,15 +48,15 @@ function display() {
 			$("#display").html('');
 			for (var i = 0; i < response.length; i++) {
 				$("#display").append(
-					'<tr>' +
-						'<td>' + i + '</td>' +
-						'<td>' + response[i].name + '</td>' +
-						'<td>' + response[i].income + '</td>' +
-						'<td>' + response[i].expenditure + '</td>' +
-						'<td>' + response[i].date.year + '</td>' +
-						'<td>' + response[i].date.month + '</td>' +
-						'<td>' + response[i].date.day + '</td>' +
-					'</tr>');
+				'<tr>' +
+					'<td>' + i + '</td>' +
+					'<td>' + response[i].name + '</td>' +
+					'<td>' + response[i].income + '</td>' +
+					'<td>' + response[i].expenditure + '</td>' +
+					'<td>' + response[i].date.year + '</td>' +
+					'<td>' + response[i].date.month + '</td>' +
+					'<td>' + response[i].date.day + '</td>' +
+				'</tr>');
 			}
 		}
 	});

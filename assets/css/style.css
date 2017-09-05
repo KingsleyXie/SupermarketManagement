@@ -59,6 +59,10 @@ th {
     display: none;
 }
 
+.subtable {
+    padding: 0 !important;
+}
+
 nav .report {
     position: fixed;
     z-index: 1000;
