@@ -17,9 +17,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -29,9 +31,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -41,9 +45,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -53,9 +59,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -72,6 +80,7 @@
 				<li><a href="#search">查询或修改员工信息</a></li>
 				<li><a href="./">返回主页</a></li>
 			</ul>
+
 			<ul class="side-nav" id="mobile-menu">
 				<li><a href="#staff">增加一名员工</a></li>
 				<li><a href="#search">查询或修改员工信息</a></li>
@@ -80,48 +89,51 @@
 		</div>
 	</nav>
 
-
-	<div id="search" class="modal">
+	<div class="modal" id="search">
 		<div class="modal-content">
 			<h5>搜索员工信息</h5>
 			<div class="row">
 				<div class="input-field col s12">
-					<input name="ID" id="ID" type="text" class="validate">
-					<label for="ID">请输入员工 ID </label>
+					<input type="text" id="ID" name="ID">
+					<label for="ID">请输入员工 ID</label>
 				</div>					
 			</div>
 
 			<div class="center-align">
-				<button href="#" onclick="update()" class="waves-effect waves-light btn">确定</button>
+				<button class="waves-effect waves-light btn" onclick="update();">确定</button>
 			</div>
 		</div>
 	</div>
 
-	<form id="staff" class="modal">
+	<form class="modal" id="staff">
 		<div class="modal-content">
-			<h5 id="staffHeader">增加一名员工</h5>
+			<h5 id="staff-header">增加一名员工</h5>
 			<div class="row">
 				<div class="input-field col s3">
-					<input name="name" id="name" type="text" class="validate" required="" />
+					<input type="text" id="name" name="name" required>
 					<label for="name">姓名</label>
 				</div>
+
 				<div class="input-field col s2 selection">
-					<select name="gender" id="gender">
+					<select id="gender" name="gender">
 						<option value="" disabled selected>性别</option>
 						<option value="男">男</option>
 						<option value="女">女</option>
 					</select>
 				</div>
+
 				<div class="input-field col s3">
-					<input name="jobNo" id="jobNo" type="number" class="validate" required="" />
+					<input type="number" id="jobNo" name="jobNo" required>
 					<label for="jobNo">工号</label>
 				</div>
+
 				<div class="input-field col s2">
+					<input type="date" class="datepicker" id="birthday" name="birthday">
 					<label for="birthday">出生日期</label>
-					<input name="birthday" type="date" class="datepicker" id="birthday" >
 				</div>
+
 				<div class="input-field col s2 selection">
-					<select name="status" id="status">
+					<select id="status" name="status">
 						<option value="" disabled selected>状态</option>
 						<option value="在职">在职</option>
 						<option value="假期">假期</option>
@@ -132,26 +144,29 @@
 
 			<div class="row">
 				<div class="input-field col s2">
-					<input name="nation" id="nation" type="text" class="validate" required="" />
+					<input type="text" id="nation" name="nation" required>
 					<label for="nation">民族</label>
 				</div>
+
 				<div class="input-field col s2">
-					<input name="nativePlace" id="nativePlace" type="text" class="validate" required="" />
-					<label for="nativePlace">籍贯</label>
+					<input type="text" id="native-place" name="nativePlace" required>
+					<label for="native-place">籍贯</label>
 				</div>
+
 				<div class="input-field col s3">
-					<input name="contact" id="contact" type="text" class="validate" required="" />
+					<input type="text" id="contact" name="contact" required>
 					<label for="contact">联系方式</label>
 				</div>
+
 				<div class="input-field col s5">
-					<input name="address" id="address" type="text" class="validate" required="" />
+					<input type="text" id="address" name="address" required>
 					<label for="address">家庭住址</label>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="input-field col s3 selection">
-					<select name="department" id="department">
+					<select id="department" name="department">
 						<option value="" disabled selected>部门</option>
 						<option value="领导管理层">领导管理层</option>
 						<option value="物资采购部">物资采购部</option>
@@ -161,23 +176,26 @@
 						<option value="人事部">人事部</option>
 					</select>
 				</div>
+
 				<div class="input-field col s3">
-					<input name="postion" id="postion" type="text" class="validate" required="" />
+					<input type="text" id="postion" name="postion" required>
 					<label for="postion">职位</label>
 				</div>
+
 				<div class="input-field col s3">
-					<input name="salary" id="salary" type="number" class="validate" required="" />
+					<input type="number" id="salary" name="salary" required>
 					<label for="salary">月薪</label>
 				</div>
+
 				<div class="input-field col s3">
-					<input name="entryTime" type="date" class="datepicker" id="entryTime">
-					<label for="entryTime">入职日期</label>
+					<input type="date" class="datepicker" id="entry-time" name="entryTime">
+					<label for="entry-time">入职日期</label>
 				</div>
 			</div>
 		</div>
 
 		<div class="modal-footer">
-			<button class="btn-flat" id="staffBtn" type="submit">确认添加</button>
+			<button type="submit" class="btn-flat" id="btn-staff">确认添加</button>
 		</div>
 	</form>
 
@@ -203,11 +221,8 @@
     	<tbody id="display"></tbody>
     </table>
 
-
-
 	<script src="./assets/js/jquery.min.js"></script>
 	<script src="./assets/js/materialize.min.js"></script>
 	<script src="./assets/js/staffs.js"></script>
 </body>
-
 </html>

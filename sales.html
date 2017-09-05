@@ -20,6 +20,7 @@
 				<li><a href="#return">退货</a></li>
 				<li><a href="./">返回主页</a></li>
 			</ul>
+
 			<ul class="side-nav" id="mobile-menu">
 				<li><a href="#sell">购物</a></li>
 				<li><a href="#return">退货</a></li>
@@ -52,55 +53,50 @@
 		</a>
 	</div>
 
-	
+	<form class="modal" id="sell">
+		<div class="modal-content">
+			<h5>购买商品</h5>
+			<div class="row">
+				<div class="input-field col s6">
+					<input type="text" id="itemID" name="itemID">
+					<label for="itemID">请输入商品 ID</label>
+				</div>	
 
-	<form id="sell">	
-		<div id="sell" class="modal">
-			<div class="modal-content">
-				<h5>购买商品</h5>
-				<div class="row">
-					<div class="input-field col s6">
-						<input name="itemID" id="itemID" type="text" class="validate">
-						<label for="itemID">请输入商品 ID </label>
-					</div>	
-					<div class="input-field col s6">
-						<input name="customerID" id="customerID" type="text" class="validate">
-						<label for="customerID">请输入用户 ID </label>
-					</div>	
-				</div>
-				<div class="center-align">
-					<button href="#" class="waves-effect waves-light btn" type="submit">确定</button>
-				</div>
+				<div class="input-field col s6">
+					<input type="text" id="customerID" name="customerID">
+					<label for="customerID">请输入用户 ID</label>
+				</div>	
+			</div>
+
+			<div class="center-align">
+				<button type="submit" class="waves-effect waves-light btn">确定</button>
 			</div>
 		</div>
 	</form>
 
-	<form id="return">	
-		<div id="return" class="modal">
-			<div class="modal-content">
-				<h5>退货</h5>
-				<div class="row">
-					<div class="input-field col s6">
-						<input name="itemID" id="itemID" type="text" class="validate">
-						<label for="itemID">请输入商品 ID </label>
-					</div>	
-					<div class="input-field col s6">
-						<input name="customerID" id="customerID" type="text" class="validate">
-						<label for="customerID">请输入用户 ID </label>
-					</div>	
+	<form class="modal" id="return">
+		<div class="modal-content">
+			<h5>退货</h5>
+			<div class="row">
+				<div class="input-field col s6">
+					<input type="text" id="itemID" name="itemID">
+					<label for="itemID">请输入商品 ID </label>
 				</div>
-				<div class="center-align">
-					<button href="#" class="waves-effect waves-light btn" type="submit">确定</button>
-				</div>
+
+				<div class="input-field col s6">
+					<input type="text" id="customerID" name="customerID">
+					<label for="customerID">请输入用户 ID </label>
+				</div>	
+			</div>
+
+			<div class="center-align">
+				<button type="submit" class="waves-effect waves-light btn">确定</button>
 			</div>
 		</div>
 	</form>
-
-
 
 	<script src="./assets/js/jquery.min.js"></script>
 	<script src="./assets/js/materialize.min.js"></script>
 	<script src="./assets/js/sales.js"></script>
 </body>
-
 </html>

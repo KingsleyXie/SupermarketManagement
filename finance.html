@@ -17,9 +17,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -29,9 +31,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -41,9 +45,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -53,9 +59,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -72,6 +80,7 @@
 				<li><a href="./report">查看财务报表</a></li>
 				<li><a href="./">返回主页</a></li>
 			</ul>
+
 			<ul class="side-nav" id="mobile-menu">
 				<li><a href="#finance">增加财务流水</a></li>
 				<li><a href="./report">查看财务报表</a></li>
@@ -80,30 +89,29 @@
 		</div>
 	</nav>
 
-	<form id="finance" class="modal">
+	<form class="modal" id="finance">
 		<div class="modal-content">
 			<h5>增加财务流水</h5>
-
 			<div class="row">
 				<div class="input-field col s4">
-					<input name="financeName" id="financeName" type="text" class="validate" required="" />
-					<label for="financeName">项目名</label>
+					<input type="text" id="finance-name" name="financeName" required>
+					<label for="finance-name">项目名</label>
 				</div>
 
 				<div class="input-field col s4">
-					<input name="income" id="income" type="number" class="validate" required="" />
+					<input type="number" id="income" name="income" required>
 					<label for="income">收入</label>
 				</div>
 
 				<div class="input-field col s4">
-					<input name="expenditure" id="expenditure" type="number" class="validate" required="" />
+					<input type="number" id="expenditure" name="expenditure" required>
 					<label for="expenditure">支出</label>
 				</div>
 			</div>
 		</div>
 
 		<div class="modal-footer">
-			<button class="btn-flat" type="submit">确认添加</button>
+			<button type="submit" class="btn-flat">确认添加</button>
 		</div>
 	</form>
 
@@ -111,7 +119,7 @@
     	<thead>
     		<tr>
     			<th>流水号</th>
-    			<th>项目名 </th>
+    			<th>项目名</th>
     			<th>收入</th>
     			<th>支出</th>
     			<th>年</th>
@@ -122,11 +130,8 @@
     	<tbody id="display"></tbody>
     </table>
 
-
-
 	<script src="./assets/js/jquery.min.js"></script>
 	<script src="./assets/js/materialize.min.js"></script>
 	<script src="./assets/js/finance.js"></script>
 </body>
-
 </html>

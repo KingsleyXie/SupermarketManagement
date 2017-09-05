@@ -6,9 +6,6 @@ $(".button-collapse").sideNav();
 $('.modal').modal();
 $('select').material_select();
 
-document.getElementById ("suppliersPY").addEventListener ("click", suppliersPY, false);
-document.getElementById ("customersPY").addEventListener ("click", customersPY, false);
-
 function suppliersPY() {
 	$.ajax({
 		type: "POST",
@@ -49,14 +46,14 @@ function suppliersPY() {
 											"<th>商品单价</th>" + 
 										"</tr>" + 
 									"</thead>" + 
-									"<tbody id=\"PY-details" + index + "\">" + 
+									"<tbody id=\"py-details" + index + "\">" + 
 									"</tbody>" + 
 								"</table>" + 
 							"</div>" + 
 						"</div>" + 
 					"</div>";
 				for (var i = 0; i < response.suppliers[index].transaction.length; i++) {
-					document.getElementById("PY-details" + index).innerHTML += 
+					document.getElementById("py-details" + index).innerHTML += 
 						"<tr>" + 
 							"<td>" + response.suppliers[index].transaction[i].transactionTime + "</td>" + 
 							"<td>" + response.suppliers[index].transaction[i].itemID + "</td>" + 
@@ -112,14 +109,14 @@ function customersPY() {
 											"<th>积分</th>" + 
 										"</tr>" + 
 									"</thead>" + 
-									"<tbody id=\"PY-details" + index + "\">" + 
+									"<tbody id=\"py-details" + index + "\">" + 
 									"</tbody>" + 
 								"</table>" + 
 							"</div>" + 
 						"</div>" + 
 					"</div>";
 				for (var i = 0; i < response.customers[index].purchases.length; i++) {
-					document.getElementById("PY-details" + index).innerHTML += 
+					document.getElementById("py-details" + index).innerHTML += 
 						"<tr>" + 
 							"<td>" + response.customers[index].purchases[i].purchaseTime + "</td>" + 
 							"<td>" + response.customers[index].purchases[i].payment + "</td>" + 

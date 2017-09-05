@@ -17,9 +17,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -29,9 +31,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -41,9 +45,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -53,9 +59,11 @@
 				<div class="circle-clipper left">
 					<div class="circle"></div>
 				</div>
+
 				<div class="gap-patch">
 					<div class="circle"></div>
 				</div>
+
 				<div class="circle-clipper right">
 					<div class="circle"></div>
 				</div>
@@ -69,31 +77,32 @@
 			<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="#add">添加货物</a></li>
-				<li><a href="#search"">更新货物信息</a></li>
+				<li><a href="#search">更新货物信息</a></li>
 				<li><a href="./">返回主页</a></li>
 			</ul>
+
 			<ul class="side-nav" id="mobile-menu">
 				<li><a href="#add">添加货物</a></li>
-				<li><a href="#search"">更新货物信息</a></li>
+				<li><a href="#search">更新货物信息</a></li>
 				<li><a href="./">返回主页</a></li>
 			</ul>
 		</div>
 	</nav>
 
-	<form id="add" class="modal">
+	<form class="modal" id="add">
 		<div class="modal-content">
-			<h5 id="inventoryHeader">添加货物</h5>
-			<div id="addInit">
+			<h5 id="inventory-header">添加货物</h5>
+			<div id="add-init">
 				<div class="row">
 					<div class="input-field col s12">
-						<input name="barcode" id="barcode" type="text" class="validate">
+						<input type="text" id="barcode" name="barcode">
 						<label for="barcode">请输入待添加商品的条形码</label>
-					</div>					
+					</div>
 				</div>
 
 				<div class="center-align">
-					<a onclick="getData()" class="waves-effect waves-light btn">获取货物信息</a>
-					<a onclick="inputData()" class="waves-effect waves-light btn">手动录入数据</a>
+					<a class="waves-effect waves-light btn" onclick="getData();">获取货物信息</a>
+					<a class="waves-effect waves-light btn" onclick="inputData();">手动录入数据</a>
 				</div>
 			</div>
 
@@ -101,71 +110,80 @@
 				<div class="indeterminate"></div>
 			</div>
 
-			<div class="item-info" id="itemInfo" class="center-align">
+			<div class="center-align item-info" id="item-info">
 				<div class="row">
 					<div class="input-field col s2">
-						<input name="supplierID" id="supplierID" type="text" class="validate">
+						<input type="text" id="supplierID" name="supplierID" required>
 						<label for="supplierID">供货商 ID</label>
 					</div>
+
 					<div class="input-field col s2">
-						<input name="brand" id="brand" type="text" class="validate">
+						<input type="text" id="brand" name="brand" required>
 						<label for="brand">商标</label>
 					</div>
+
 					<div class="input-field col s3">
-						<input name="name" id="name" type="text" class="validate">
+						<input type="text" id="name" name="name" required>
 						<label for="name">商品名</label>
 					</div>
+
 					<div class="input-field col s5">
-						<input name="unspsc" id="unspsc" type="text" class="validate">
+						<input type="text" id="unspsc" name="unspsc" required>
 						<label for="unspsc">分类</label>
 					</div>
 				</div>
 				
 				<div class="row">
 					<div class="input-field col s2">
-						<input name="type" id="type" type="text" class="validate">
+						<input type="text" id="type" name="type" required>
 						<label for="type">规格</label>
 					</div>
+
 					<div class="input-field col s2">
-						<input name="price" id="price" type="text" class="validate">
+						<input type="text" id="price" name="price" required>
 						<label for="price">进货价</label>
 					</div>
+
 					<div class="input-field col s2">
-						<input name="salePrice" id="salePrice" type="text" class="validate">
-						<label for="salePrice">售价</label>
+						<input type="text" id="sale-price" name="salePrice" required>
+						<label for="sale-price">售价</label>
 					</div>
+
 					<div class="input-field col s2">
-						<input name="expiredTime" type="date" class="datepicker" id="expiredTime">
-						<label for="expiredTime">过期时间</label>
+						<input type="date" class="datepicker" id="expired-time" name="expiredTime">
+						<label for="expired-time">过期时间</label>
 					</div>
+
 					<div class="input-field col s2">
-						<input name="inventoryQuantity" id="inventoryQuantity" type="number" class="validate">
-						<label for="inventoryQuantity">库存量</label>
+						<input type="number" id="inventory-quantity" name="inventoryQuantity" required>
+						<label for="inventory-quantity">库存量</label>
 					</div>
+
 					<div class="input-field col s2">
-						<input name="threshold" id="threshold" type="number" class="validate" value="50">
+						<input type="number" id="threshold" name="threshold" value="50" required>
 						<label for="threshold" active>报警阈值</label>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		<div class="modal-footer">
-			<button id="inventoryBtn" class="btn-flat" type="submit">确认添加</button>
+			<button type="submit" class="btn-flat" id="btn-inventory">确认添加</button>
 		</div>
 	</form>
 
-	<div id="search" class="modal">
+	<div class="modal" id="search">
 		<div class="modal-content">
 			<h5>搜索货物信息</h5>
 			<div class="row">
 				<div class="input-field col s12">
-					<input name="itemID" id="itemID" type="text" class="validate">
-					<label for="itemID">请输入商品 ID </label>
-				</div>		
+					<input type="text" id="itemID" name="itemID">
+					<label for="itemID">请输入商品 ID</label>
+				</div>
 			</div>
 
 			<div class="center-align">
-				<button href="#" onclick="update()" class="waves-effect waves-light btn">确定</button>
+				<button class="waves-effect waves-light btn" onclick="update();">确定</button>
 			</div>
 		</div>
 	</div>
@@ -173,7 +191,7 @@
     <table class="highlight responsive-table">
     	<thead>
     		<tr>
-    			<th>商品 ID </th>
+    			<th>商品 ID</th>
     			<th>条形码</th>
     			<th>商标</th>
     			<th>商品名</th>
@@ -188,15 +206,11 @@
     			<th>更新时间</th>
     		</tr>
     	</thead>
-
     	<tbody id="display"></tbody>
     </table>
-
-
 
 	<script src="./assets/js/jquery.min.js"></script>
 	<script src="./assets/js/materialize.min.js"></script>
 	<script src="./assets/js/inventory.js"></script>
 </body>
-
 </html>
