@@ -7,7 +7,7 @@ function suppliersPY() {
 		type: 'POST',
 		url: './assets/API/api.cgi',
 		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify({'dest': 5, 'operation': 2}),
+		data: JSON.stringify({"dest": 5, "operation": 2}),
 		success: function(response) {
 			$("#display").hide(600);
 			setTimeout(function () {
@@ -68,7 +68,7 @@ function customersPY() {
 		type: 'POST',
 		url: './assets/API/api.cgi',
 		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify({'dest': 5, 'operation': 2}),
+		data: JSON.stringify({"dest": 5, "operation": 2}),
 		success: function(response) {
 			$("#display").hide(600);
 			setTimeout(function () {

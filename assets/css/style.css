@@ -54,6 +54,11 @@ th {
 .placeholder-image {
     height: 360px;
 }
+@media (max-width: 992px) {
+    .placeholder-image {
+        height: 270px;
+    }
+}
 
 .item-info {
     display: none;

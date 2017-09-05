@@ -35,7 +35,7 @@ $(document).ready(function() {
 		type: 'POST',
 		url: './assets/API/api.cgi',
 		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify({'dest': 5, 'operation': 1}),
+		data: JSON.stringify({"dest": 5, "operation": 1}),
 		success: function(response) {
 			var data = [[], [], [], []];
 			for (var i = 0; i < response.length; i++) {
