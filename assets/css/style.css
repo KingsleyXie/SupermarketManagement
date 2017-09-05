@@ -64,11 +64,11 @@ nav .report {
     z-index: 1000;
     top: 0;
 }
-.diagram {
-     height: 70vh;
-     width: 100%;
-     margin-top: 100px;
-     margin-bottom: 30px;
+.chart {
+	height: 70vh;
+	width: 100%;
+	margin-top: 100px;
+	margin-bottom: 30px;
 }
 
 .copyright {

@@ -1,83 +1,71 @@
-var chart1 = new CanvasJS.Chart("diagram1",
-{
+var chart1 = new CanvasJS.Chart("chart1", {
 	animationEnabled: true,
-	title:{
-		text: "日报表 - 收入部分",
-		fontFamily: "Impact",
-		fontWeight: "normal"
+	title: {
+		text: '日报表 - 收入部分',
+		fontFamily: 'Impact',
+		fontWeight: 'normal'
 	},
-	legend:{
-		verticalAlign: "bottom",
-		horizontalAlign: "center"
+	legend: {
+		verticalAlign: 'bottom',
+		horizontalAlign: 'center'
 	},
-	data: [
-	{
+	data: [{
 		indexLabelFontSize: 20,
-		indexLabelFontFamily: "Garamond",
-		indexLabelFontColor: "darkgrey",
-		indexLabelLineColor: "darkgrey",
-		indexLabelPlacement: "outside",
-		type: "doughnut",
+		indexLabelFontFamily: 'Garamond',
+		indexLabelFontColor: 'darkgrey',
+		indexLabelLineColor: 'darkgrey',
+		indexLabelPlacement: 'outside',
+		type: 'doughnut',
 		showInLegend: true,
-		legendText: "{indexLabel}",
+		legendText: '{indexLabel}',
 		dataPoints: []
-	}
-	]
+	}]
 });
 
-var chart2 = new CanvasJS.Chart("diagram2",
-{
+var chart2 = new CanvasJS.Chart("chart2", {
 	animationEnabled: true,
-	title:{
-		text: "日报表 - 支出部分",
-		fontFamily: "Impact",
-		fontWeight: "normal"
+	title: {
+		text: '日报表 - 支出部分',
+		fontFamily: 'Impact',
+		fontWeight: 'normal'
 	},
-	legend:{
-		verticalAlign: "bottom",
-		horizontalAlign: "center"
+	legend: {
+		verticalAlign: 'bottom',
+		horizontalAlign: 'center'
 	},
-	data: [
-	{
+	data: [{
 		indexLabelFontSize: 20,
-		indexLabelFontFamily: "Garamond",
-		indexLabelFontColor: "darkgrey",
-		indexLabelLineColor: "darkgrey",
-		indexLabelPlacement: "outside",
-		type: "doughnut",
+		indexLabelFontFamily: 'Garamond',
+		indexLabelFontColor: 'darkgrey',
+		indexLabelLineColor: 'darkgrey',
+		indexLabelPlacement: 'outside',
+		type: 'doughnut',
 		showInLegend: true,
-		legendText: "{indexLabel}",
+		legendText: '{indexLabel}',
 		dataPoints: []
-	}
-	]
+	}]
 });
 
-var chart3 = new CanvasJS.Chart("diagram3",
-{
+var chart3 = new CanvasJS.Chart("chart3", {
 	animationEnabled: true,
-	title:{
-		text: "月报表 - 收入部分"
+	title: {
+		text: '月报表 - 收入部分'
 	},
-	data: [
-	{
-		type: "column",
+	data: [{
+		type: 'column',
 		dataPoints: []
-	}
-	]
+	}]
 });
 
-var chart4 = new CanvasJS.Chart("diagram4",
-{
+var chart4 = new CanvasJS.Chart("chart4", {
 	animationEnabled: true,
-	title:{
-		text: "月报表 - 支出部分"
+	title: {
+		text: '月报表 - 支出部分'
 	},
-	data: [
-	{
-		type: "column",
+	data: [{
+		type: 'column',
 		dataPoints: []
-	}
-	]
+	}]
 });
 
 
