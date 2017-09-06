@@ -1,119 +1,108 @@
-var dest = 3, operation = 2, data = {};
+$("#loading").css('display', 'flex');
+display(); $("#loading").hide();
+var modifying = false;
 
 $(document).ready(function() {
-	document.getElementById("loading").style.display = "flex";
-
+	$(".modal").modal();
+	$("select").material_select();
 	$(".button-collapse").sideNav();
-	$('.modal').modal();
-	$('select').material_select();
-	$('.datepicker').pickadate({
+	$(".datepicker").pickadate({
     	selectMonths: true,
     	selectYears: 15,
-    	format:'yyyy-mm-dd'
+    	format: 'yyyy-mm-dd'
     });
+    $("#entry-time").pickadate('picker').set('select', new Date()).trigger('change');
 	
-	$('#staff').submit(function(e) {
+	$("#staff").submit(function(e) {
 		e.preventDefault();
-		data = {};
-		$(this).serializeArray().map(function(x){data[x.name] = x.value;}); 
-		data["dest"] = dest; data["operation"] = operation;
-		data["staffID"] = parseFloat(document.getElementById("ID").value);
+
+		data = {"dest": 3, "operation": (modifying ? 3 : 2)};
+		$(this).serializeArray().map(function(x){data[x.name] = x.value;});
+		data["staffID"] = parseFloat($("#ID").val());
 		data["salary"] = parseFloat(data["salary"]);
 		data = JSON.stringify(data);
-		$.ajax({
-			type: "POST",
-			url: './assets/API/api.cgi',
-			contentType: "application/json; charset=utf-8",
-			data: data,
-			dataType: "json",
-			success: function(response)
-			{
-				if (response.code == 0) {
-					if (operation == 2) {
-						Materialize.toast("员工信息添加成功！", 3000);
-					}
-					if (operation == 3) {
-						Materialize.toast("员工信息修改成功！", 3000);
-					}
 
-					window.setTimeout(function ()
+		$.ajax({
+			type: 'POST',
+			url: './assets/API/api.cgi',
+			contentType: 'application/json; charset=utf-8',
+			data: data,
+			success: function(response) {
+				if (response.code == 0) {
+					Materialize.toast('员工信息' + (modifying ? '修改' : '添加') + '成功！', 1700);
+					setTimeout(function ()
 					{
-						window.location.href = "./staffs";
-					}, 3600);
+						$("#staff").modal('close');
+						display();
+						
+						//Reset All Input Data
+						$("input").val('');
+						$("select").val(0).material_select();
+						$("label").removeClass("active");
+					}, 2000);
 				}
 			}
 		});
 	});
+});
 
-	data = {};
-	data["dest"] = dest; data["operation"] = 1;
-	data = JSON.stringify(data);
+function update() {
+	modifying = true;
+	var info = $($("#display > tr")[$("#ID").val()]).children();
+	
+	//Show Form In Modifying Mode
+	$("#staff-header").text('修改员工信息');
+	$("#btn-staff").text('确认修改');
+	$("label").addClass("active");
+
+	//Fill Form With Corresponding Value
+	$("#jobNo").val(info[1].textContent);
+	$("#name").val(info[2].textContent);
+	$("#nation").val(info[4].textContent);
+	$("#native-place").val(info[5].textContent);
+	$("#postion").val(info[7].textContent);
+	$("#contact").val(info[9].textContent);
+	$("#address").val(info[10].textContent);
+	$("#salary").val(info[11].textContent);
+
+	$("#gender").val(info[3].textContent).material_select();
+	$("#department").val(info[6].textContent).material_select();
+	$("#status").val(info[13].textContent).material_select();
+
+	$("#birthday").pickadate('picker').set('select', info[8].textContent).trigger('change');
+	$("#entry-time").pickadate('picker').set('select', info[12].textContent).trigger('change');
+
+	$("#search").modal('close');
+	$("#staff").modal('open');
+}
+
+function display() {
 	$.ajax({
-		type: "POST",
-		url: "./assets/API/api.cgi",
-		contentType: "application/json; charset=utf-8",
-		data: data,
-		dataType: "json",
-		success: function(response)
-		{
-			document.getElementById("loading").style.display = "none";
-			for (var i = 0; i <= response.length - 1; i++) {
-				document.getElementById("display").innerHTML += 
-					"<tr id=\"ID" + i + "\">" +
-						"<th>" + i + "</th>" + 
-						"<th>" + response[i].jobNo + "</th>" + 
-						"<th>" + response[i].name + "</th>" + 
-						"<th>" + response[i].gender + "</th>" + 
-						"<th>" + response[i].nation + "</th>" + 
-						"<th>" + response[i].nativePlace + "</th>" + 
-						"<th>" + response[i].department + "</th>" + 
-						"<th>" + response[i].postion + "</th>" + 
-						"<th>" + response[i].birthday + "</th>" + 
-						"<th>" + response[i].contact + "</th>" + 
-						"<th>" + response[i].address + "</th>" + 
-						"<th>" + response[i].salary + "</th>" + 
-						"<th>" + response[i].entryTime + "</th>" + 
-						"<th>" + response[i].status + "</th>" + 
-					"</tr>";
+		type: 'POST',
+		url: './assets/API/api.cgi',
+		contentType: 'application/json; charset=utf-8',
+		data: JSON.stringify({"dest": 3, "operation": 1}),
+		success: function(response) {
+			$("#display").html('');
+			for (var i = 0; i < response.length; i++) {
+				$("#display").append(
+					'<tr id="ID' + i + '">' +
+						'<td>' + i + '</td>' +
+						'<td>' + response[i].jobNo + '</td>' +
+						'<td>' + response[i].name + '</td>' +
+						'<td>' + response[i].gender + '</td>' +
+						'<td>' + response[i].nation + '</td>' +
+						'<td>' + response[i].nativePlace + '</td>' +
+						'<td>' + response[i].department + '</td>' +
+						'<td>' + response[i].postion + '</td>' +
+						'<td>' + response[i].birthday + '</td>' +
+						'<td>' + response[i].contact + '</td>' +
+						'<td>' + response[i].address + '</td>' +
+						'<td>' + response[i].salary + '</td>' +
+						'<td>' + response[i].entryTime + '</td>' +
+						'<td>' + response[i].status + '</td>' +
+					'</tr>');
 			}
 		}
 	});
-});
-
-
-
-function update() {
-	var info = document.getElementById("ID" + document.getElementById("ID").value).cells;
-
-	document.getElementById("staffHeader").textContent = "修改员工信息";
-	document.getElementById("staffBtn").textContent = "确认修改";
-	
-	document.querySelector("#jobNo + label").className ="active";
-	document.getElementById("jobNo").value = info[1].textContent;
-	document.querySelector("#name + label").className ="active";
-	document.getElementById("name").value = info[2].textContent;
-	document.querySelector("#nation + label").className ="active";
-	document.getElementById("nation").value = info[4].textContent;
-	document.querySelector("#nativePlace + label").className ="active";
-	document.getElementById("nativePlace").value = info[5].textContent;
-	document.querySelector("#postion + label").className ="active";
-	document.getElementById("postion").value = info[7].textContent;
-	document.querySelector("#contact + label").className ="active";
-	document.getElementById("contact").value = info[9].textContent;
-	document.querySelector("#address + label").className ="active";
-	document.getElementById("address").value = info[10].textContent;
-	document.querySelector("#salary + label").className ="active";
-	document.getElementById("salary").value = info[11].textContent;
-
-	$('#gender').val(info[3].textContent);	$('#gender').material_select();
-	$('#department').val(info[6].textContent);	$('#department').material_select();
-	$('#status').val(info[13].textContent);	$('#status').material_select();
-
-	$('#birthday').pickadate('picker').set('select', info[8].textContent, { format: 'yyyy-mm-dd' }).trigger("change");
-	$('#entryTime').pickadate('picker').set('select', info[12].textContent, { format: 'yyyy-mm-dd' }).trigger("change");
-
-	$("#search").modal("close");
-	$("#staff").modal("open");
-
-	operation = 3;
 }
