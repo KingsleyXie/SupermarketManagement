@@ -30,8 +30,7 @@ $(document).ready(function() {
 			success: function(response) {
 				if (response.code == 0) {
 					Materialize.toast('员工信息' + (modifying ? '修改' : '添加') + '成功！', 1700);
-					setTimeout(function ()
-					{
+					setTimeout(function () {
 						$("#staff").modal('close');
 						display();
 						

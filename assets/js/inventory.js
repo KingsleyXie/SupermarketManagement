@@ -13,10 +13,10 @@ $(document).ready(function() {
 	$("select").material_select();
 	$(".button-collapse").sideNav();
 	$(".datepicker").pickadate({
-    	selectMonths: true,
-    	selectYears: 15,
-    	format: 'yyyy-mm-dd'
-    });
+		selectMonths: true,
+		selectYears: 15,
+		format: 'yyyy-mm-dd'
+	});
 
 	$("#inventory").submit(function(e) {
 		e.preventDefault();
@@ -50,8 +50,11 @@ $(document).ready(function() {
 						display();
 						
 						//Reset All Input Data
+						$("#inventory-header").text('添加货物');
+						$("#btn-inventory").text('确认添加');
+						$("#item-info").hide();
+						$("#add-init").show();
 						$("input").val('');
-						$("select").val(0).material_select();
 						$("label").removeClass("active");
 					}, 2000);
 				}
@@ -60,74 +63,72 @@ $(document).ready(function() {
 	});
 });
 
-function inputData() {
-	document.getElementById("add-init").style.display = "none";
-	document.getElementById("item-info").style.display = "block";
-}
-
-function getData() {
-	document.getElementById("progress").style.display = "block";
-	var barcode = document.getElementById("barcode").value;
+function getDataFromAPI() {
+	$("#progress").show();
 	$.ajax({
-      type: "GET",
-      url: 'http://jisutxmcx.market.alicloudapi.com/barcode2/query',
-      headers: 
-      {
-        'Authorization':'APPCODE your_APPCODE_here'
-        // Add your APPCODE here, you can get it on
-        // https://market.aliyun.com/products/56928004/cmapi011806.html
-      },
-      data: 'barcode=' + barcode,
-      success: function(response) {
-      	if (response.status == 0) {
-				document.getElementById("brand").value = response.result.brand;
-				document.getElementById("name").value = response.result.name;
-				document.getElementById("unspsc").value = response.result.unspsc;
-				document.getElementById("type").value = response.result.type;
-				document.getElementById("price").value = response.result.price;
+		type: 'GET',
+		url: 'http://jisutxmcx.market.alicloudapi.com/barcode2/query',
+		headers: {
+			'Authorization':'APPCODE your_APPCODE_here'
+			// Add your APPCODE here, you can get it on
+			// https://market.aliyun.com/products/56928004/cmapi011806.html
+		},
+		data: 'barcode=' + $("#barcode").val(),
+		success: function(response) {
+			if (response.status == 0) {
+				$("#brand").val(response.result.brand);
+				$("#name").val(response.result.name);
+				$("#unspsc").val(response.result.unspsc);
+				$("#type").val(response.result.type);
+				$("#price").val(response.result.price);
+				$("label").addClass("active");
 
-				window.setTimeout(function ()
-				{
-					document.getElementById("inventory-quantity").focus();
+				toggle();
+				window.setTimeout(function () {
+					$("#inventory-quantity").focus();
 				}, 0);
-
-				document.getElementById("progress").style.display = "none";
-				document.getElementById("add-init").style.display = "none";
-				document.getElementById("item-info").style.display = "block";
-			}},
+			}
+		},
 		error: function() {
-			Materialize.toast("未找到商品信息，请手动录入数据", 3000);
-			document.getElementById("progress").style.display = "none";
-			document.getElementById("add-init").style.display = "none";
-			document.getElementById("item-info").style.display = "block";
+			Materialize.toast("未找到商品信息，请手动录入数据", 1700);
+			toggle();
 		}
 	});
 }
 
 function update() {
 	modifying = true;
-	var info = document.getElementById("ID" + document.getElementById("itemID").value).cells;
-
-	document.getElementById("inventory-header").textContent = "修改货物信息";
-	document.getElementById("btn-inventory").textContent = "确认修改";
+	var info = $($("#display > tr")[$("#itemID").val()]).children();
 	
-	document.getElementById("brand").value = info[2].textContent;
-	document.getElementById("name").value = info[3].textContent;
-	document.getElementById("unspsc").value = info[4].textContent;
-	document.getElementById("type").value = info[5].textContent;
-	document.getElementById("price").value = info[6].textContent;
-	document.getElementById("sale-price").value = info[7].textContent;
-	document.getElementById("inventory-quantity").value = info[8].textContent;
+	//Show Form In Modifying Mode
+	$("#inventory-header").text('修改货物信息');
+	$("#btn-inventory").text('确认修改');
+	$("label").addClass("active");
+	
+	$("#brand").val(info[2].textContent);
+	$("#name").val(info[3].textContent);
+	$("#unspsc").val(info[4].textContent);
+	$("#type").val(info[5].textContent);
+	$("#price").val(info[6].textContent);
+	$("#sale-price").val(info[7].textContent);
+	$("#inventory-quantity").val(info[8].textContent);
+	$("#threshold").val(info[9].textContent);
 
-	$('#expired-time').pickadate('picker').set('select', info[10].textContent).trigger("change");
+	$("#expired-time").pickadate('picker').set('select', info[10].textContent).trigger('change');
 
-	$("#search").modal("close");
-	$("#inventory").modal("open");
-	inputData();
+	$("#search").modal('close');
+	$("#inventory").modal('open');
+	toggle();
 
 	setTimeout(function () {
 		$("#inventory-quantity").focus();
 	}, 0);
+}
+
+function toggle() {
+	$("#progress").hide();
+	$("#add-init").hide(500);
+	$("#item-info").show(500);
 }
 
 function display() {
@@ -140,24 +141,21 @@ function display() {
 			$("#display").html('');
 			for (var i = 0; i < response.length; i++) {
 				$("#display").append(
-				'<tr id="ID' + i + '">' +
-					'<th>' + i + '</th>' + 
-					'<th>' + response[i].barcode + '</th>' + 
-					'<th>' + response[i].brand + '</th>' + 
-					'<th>' + response[i].name + '</th>' + 
-					'<th>' + response[i].unspsc + '</th>' + 
-					'<th>' + response[i].type + '</th>' + 
-					'<th>' + response[i].price + '</th>' + 
-					'<th>' + response[i].salePrice + '</th>' + 
-					'<th>' + response[i].inventoryQuantity + '</th>' + 
-					'<th>' + response[i].threshold + '</th>' + 
-					'<th>' + response[i].expiredTime + '</th>' + 
-					'<th>' + response[i].importTime + '</th>' + 
-					'<th>' + response[i].updateTime + '</th>' + 
+				'<tr' + (response[i].inventoryQuantity > response[i].threshold ? '' : ' class="red lighten-1"') + '>' +
+					'<td>' + i + '</td>' +
+					'<td>' + response[i].barcode + '</td>' +
+					'<td>' + response[i].brand + '</td>' +
+					'<td>' + response[i].name + '</td>' +
+					'<td>' + response[i].unspsc + '</td>' +
+					'<td>' + response[i].type + '</td>' +
+					'<td>' + response[i].price + '</td>' +
+					'<td>' + response[i].salePrice + '</td>' +
+					'<td>' + response[i].inventoryQuantity + '</td>' +
+					'<td>' + response[i].threshold + '</td>' +
+					'<td>' + response[i].expiredTime + '</td>' +
+					'<td>' + response[i].importTime + '</td>' +
+					'<td>' + response[i].updateTime + '</td>' +
 				'</tr>');
-				if (response[i].inventoryQuantity < response[i].threshold) {
-					$("#ID" + i).addClass("red lighten-1");
-				}
 			}
 		}
 	});

@@ -101,8 +101,8 @@
 				</div>
 
 				<div class="center-align">
-					<a class="waves-effect waves-light btn" onclick="getData();">获取货物信息</a>
-					<a class="waves-effect waves-light btn" onclick="inputData();">手动录入数据</a>
+					<a class="waves-effect waves-light btn" onclick="getDataFromAPI();">获取货物信息</a>
+					<a class="waves-effect waves-light btn" onclick="toggle();">手动录入数据</a>
 				</div>
 			</div>
 
@@ -112,54 +112,56 @@
 
 			<div class="center-align item-info" id="item-info">
 				<div class="row">
-					<div class="input-field col s2">
+					<div class="input-field col s3">
 						<input type="text" id="supplierID" name="supplierID" required>
 						<label for="supplierID">供货商 ID</label>
 					</div>
 
-					<div class="input-field col s2">
+					<div class="input-field col s3">
 						<input type="text" id="brand" name="brand" required>
 						<label for="brand">商标</label>
 					</div>
 
-					<div class="input-field col s3">
+					<div class="input-field col s6">
 						<input type="text" id="name" name="name" required>
 						<label for="name">商品名</label>
 					</div>
+				</div>
 
+				<div class="row">
 					<div class="input-field col s5">
 						<input type="text" id="unspsc" name="unspsc" required>
 						<label for="unspsc">分类</label>
 					</div>
-				</div>
-				
-				<div class="row">
-					<div class="input-field col s2">
+
+					<div class="input-field col s3">
 						<input type="text" id="type" name="type" required>
 						<label for="type">规格</label>
 					</div>
 
-					<div class="input-field col s2">
+					<div class="input-field col s4">
+						<input type="date" class="datepicker" id="expired-time" name="expiredTime">
+						<label for="expired-time">过期时间</label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s3">
 						<input type="text" id="price" name="price" required>
 						<label for="price">进货价</label>
 					</div>
 
-					<div class="input-field col s2">
+					<div class="input-field col s3">
 						<input type="text" id="sale-price" name="salePrice" required>
 						<label for="sale-price">售价</label>
 					</div>
 
-					<div class="input-field col s2">
-						<input type="date" class="datepicker" id="expired-time" name="expiredTime">
-						<label for="expired-time">过期时间</label>
-					</div>
-
-					<div class="input-field col s2">
+					<div class="input-field col s3">
 						<input type="number" id="inventory-quantity" name="inventoryQuantity" required>
 						<label for="inventory-quantity">库存量</label>
 					</div>
 
-					<div class="input-field col s2">
+					<div class="input-field col s3">
 						<input type="number" id="threshold" name="threshold" value="50" required>
 						<label for="threshold" active>报警阈值</label>
 					</div>
