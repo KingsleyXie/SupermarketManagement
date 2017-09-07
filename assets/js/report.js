@@ -151,15 +151,15 @@ $(document).ready(function() {
 				chart[2].options.subtitles[0].text = '';
 
 			$("#loading").hide();
-			for (let i = 0; i < 6; i++) {
+			for (var i = 0; i < 6; i++) {
 				//Set Data To Charts And Render Them
 				chart[i].options.animationEnabled = true;
 				chart[i].options.title.fontWeight = 'normal';
-				$("#chart" + i).one('inview', function(event, isInView) {
-					if (isInView) {
-						chart[i].render();
-					}
-				});
+				(function(i){
+					$("#chart" + i).one('inview', function(event, isInView) {
+						if (isInView) { chart[i].render(); }
+					});
+				})(i);
 			}
 		}
 	});
