@@ -32,7 +32,30 @@ var chart = [
 		}]
 	}),
 
-	'',
+	new CanvasJS.Chart("chart2", {
+		zoomEnabled:true,
+		title: { text: year + '年' + month + '月' + day + '日财务报表' },
+		subtitles: [{
+			text: '（暂无当天财务数据）',
+			fontSize: 30,
+			verticalAlign: 'center'
+		}],
+		data: [{
+			type: 'column',
+			color: '#ff7043',
+			showInLegend: true,
+			legendText: '收入金额',
+			indexLabel: "{y}",
+			dataPoints: []
+		}, {
+			type: 'column',
+			color: '#42a5f5',
+			showInLegend: true,
+			legendText: '支出金额',
+			indexLabel: "{y}",
+			dataPoints: []
+		}]
+	}),
 
 	new CanvasJS.Chart("chart3", {
 		zoomEnabled:true,
@@ -85,6 +108,9 @@ $(document).ready(function() {
 
 						response[i].expenditure != 0 ?
 						chart[1].options.data[0].dataPoints.push({ y: response[i].expenditure, indexLabel: response[i].name }) : '';						
+					
+						chart[2].options.data[0].dataPoints.push({ y: response[i].income, label: response[i].name });
+						chart[2].options.data[1].dataPoints.push({ y: response[i].expenditure, label: response[i].name });
 					}
 				}
 			}
@@ -93,10 +119,11 @@ $(document).ready(function() {
 				chart[0].options.subtitles[0].text = '';
 			if (chart[1].options.data[0].dataPoints.length)
 				chart[1].options.subtitles[0].text = '';
+			if (chart[2].options.data[0].dataPoints.length || chart[2].options.data[1].dataPoints.length)
+				chart[2].options.subtitles[0].text = '';
 
 			$("#loading").hide();
 			for (let i = 0; i < 5; i++) {
-				if (i == 2) i++;
 				//Set Data To Charts And Render Them
 				chart[i].options.animationEnabled = true;
 				chart[i].options.title.fontWeight = 'normal';
