@@ -111,11 +111,11 @@ $(document).ready(function() {
 		success: function(response) {
 			//Initialize Data Of Monthly Report Chart
 			for (var i = 1; i <= day; i++) {
-				chart[3].options.data[0].dataPoints.push({ x: i, y: 0, label: i });
-				chart[4].options.data[0].dataPoints.push({ x: i, y: 0, label: i });
-				chart[5].options.data[0].dataPoints.push({ x: i, y: 0, label: i });
-				chart[5].options.data[1].dataPoints.push({ x: i, y: 0, label: i });
-				chart[5].options.data[2].dataPoints.push({ x: i, y: 0, label: i });
+				dataPoints(3, 0).push({ x: i, y: 0, label: i });
+				dataPoints(4, 0).push({ x: i, y: 0, label: i });
+				dataPoints(5, 0).push({ x: i, y: 0, label: i });
+				dataPoints(5, 1).push({ x: i, y: 0, label: i });
+				dataPoints(5, 2).push({ x: i, y: 0, label: i });
 			}
 
 			for (var i = 0; i < response.length; i++) {
@@ -125,31 +125,29 @@ $(document).ready(function() {
 
 				if (resYear == year && resMonth == month) {
 					//Summarize Monthly Report Data
-					chart[3].options.data[0].dataPoints[resDay - 1].y += response[i].income;
-					chart[5].options.data[0].dataPoints[resDay - 1].y += response[i].income;
-					chart[4].options.data[0].dataPoints[resDay - 1].y += response[i].expenditure;
-					chart[5].options.data[1].dataPoints[resDay - 1].y += response[i].expenditure;
-					chart[5].options.data[2].dataPoints[resDay - 1].y += response[i].income - response[i].expenditure;
+					dataPoints(3, 0)[resDay - 1].y += response[i].income;
+					dataPoints(5, 0)[resDay - 1].y += response[i].income;
+					dataPoints(4, 0)[resDay - 1].y += response[i].expenditure;
+					dataPoints(5, 1)[resDay - 1].y += response[i].expenditure;
+					dataPoints(5, 2)[resDay - 1].y += response[i].income - response[i].expenditure;
 
 					if (resDay == day) {
 						//Add Income And Expenditure Data Of Current Date
 						response[i].income != 0 ?
-						chart[0].options.data[0].dataPoints.push({ y: response[i].income, indexLabel: response[i].name }) : '';
+						dataPoints(0, 0).push({ y: response[i].income, indexLabel: response[i].name }) : '';
 
 						response[i].expenditure != 0 ?
-						chart[1].options.data[0].dataPoints.push({ y: response[i].expenditure, indexLabel: response[i].name }) : '';						
+						dataPoints(1, 0).push({ y: response[i].expenditure, indexLabel: response[i].name }) : '';						
 					
-						chart[2].options.data[0].dataPoints.push({ y: response[i].income, label: response[i].name });
-						chart[2].options.data[1].dataPoints.push({ y: response[i].expenditure, label: response[i].name });
+						dataPoints(2, 0).push({ y: response[i].income, label: response[i].name });
+						dataPoints(2, 1).push({ y: response[i].expenditure, label: response[i].name });
 					}
 				}
 			}
 
-			if (chart[0].options.data[0].dataPoints.length)
-				chart[0].options.subtitles[0].text = '';
-			if (chart[1].options.data[0].dataPoints.length)
-				chart[1].options.subtitles[0].text = '';
-			if (chart[2].options.data[0].dataPoints.length || chart[2].options.data[1].dataPoints.length)
+			if (dataPoints(0, 0).length) chart[0].options.subtitles[0].text = '';
+			if (dataPoints(1, 0).length) chart[1].options.subtitles[0].text = '';
+			if (dataPoints(2, 0).length || dataPoints(2, 1).length)
 				chart[2].options.subtitles[0].text = '';
 
 			$("#loading").hide();
@@ -166,3 +164,7 @@ $(document).ready(function() {
 		}
 	});
 });
+
+function dataPoints(chartIndex, dataIndex) {
+	return chart[chartIndex].options.data[dataIndex].dataPoints;
+}
