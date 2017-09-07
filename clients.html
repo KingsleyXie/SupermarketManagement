@@ -11,23 +11,27 @@
 </head>
 
 <body>
-	<nav>
-		<div class="nav-wrapper">
-			<div class="brand-logo">客户管理系统</div>
-			<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
-			<ul class="right hide-on-med-and-down">
-				<li><a href="#" onclick="suppliersPY(); return false;">供货商交易记录</a></li>
-				<li><a href="#" onclick="customersPY(); return false;">超市会员信息</a></li>
-				<li><a href="./">返回主页</a></li>
-			</ul>
-
-			<ul class="side-nav" id="mobile-menu">
-				<li><a href="#" onclick="suppliersPY(); return false;">供货商交易记录</a></li>
-				<li><a href="#" onclick="customersPY(); return false;">超市会员信息</a></li>
-				<li><a href="./">返回主页</a></li>
-			</ul>
+	<header>
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<div class="brand-logo center">客户管理系统</div>
+					<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+					<ul class="right hide-on-med-and-down">
+						<li><a href="#" onclick="suppliersPY(); return false;">供货商交易记录</a></li>
+						<li><a href="#" onclick="customersPY(); return false;">超市会员信息</a></li>
+						<li><a href="./">返回主页</a></li>
+					</ul>
+				</div>
+			</nav>
 		</div>
-	</nav>
+
+		<ul class="side-nav" id="mobile-menu">
+			<li><a href="#" onclick="suppliersPY(); return false;">供货商交易记录</a></li>
+			<li><a href="#" onclick="customersPY(); return false;">超市会员信息</a></li>
+			<li><a href="./">返回主页</a></li>
+		</ul>
+	</header>
 
 	<div id="display">
 		<div class="row placeholder">

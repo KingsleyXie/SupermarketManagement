@@ -1,5 +1,4 @@
 $(".button-collapse").sideNav();
-$("#loading").css('display', 'flex');
 
 var date = new Date(),
 	year = date.getFullYear(),

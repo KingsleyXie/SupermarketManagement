@@ -29,7 +29,7 @@ th {
 }
 
 .loading {
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     background:#000;
@@ -72,11 +72,6 @@ th {
     padding: 0 !important;
 }
 
-nav .report {
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-}
 .chart {
 	height: 70vh;
 	width: 100%;

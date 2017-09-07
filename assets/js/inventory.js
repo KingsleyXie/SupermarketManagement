@@ -1,4 +1,3 @@
-$("#loading").css('display', 'flex');
 display(); $("#loading").hide();
 var modifying = false;
 
