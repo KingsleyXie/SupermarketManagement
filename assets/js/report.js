@@ -42,14 +42,14 @@ var chart = [
 		}],
 		data: [{
 			type: 'column',
-			color: '#ff7043',
+			color: '#00e5ff',
 			showInLegend: true,
 			legendText: '收入金额',
 			indexLabel: "{y}",
 			dataPoints: []
 		}, {
 			type: 'column',
-			color: '#42a5f5',
+			color: '#ff7043',
 			showInLegend: true,
 			legendText: '支出金额',
 			indexLabel: "{y}",
@@ -75,7 +75,31 @@ var chart = [
 			indexLabel: "{y}",
 			dataPoints: []
 		}]
-	})
+	}),
+
+	new CanvasJS.Chart("chart5", {
+		zoomEnabled:true,
+		title: { text: year + '年' + month + '月财务报表' },
+		data: [{
+			type: 'line',
+			color: '#00e5ff',
+			showInLegend: true,
+			legendText: '收入金额',
+			dataPoints: []
+		}, {
+			type: 'line',
+			color: '#ff7043',
+			showInLegend: true,
+			legendText: '支出金额',
+			dataPoints: []
+		}, {
+			type: 'line',
+			color: '#42a5f5',
+			showInLegend: true,
+			legendText: '总金额',
+			dataPoints: []
+		}]
+	}),
 ];
 
 $(document).ready(function() {
@@ -89,6 +113,9 @@ $(document).ready(function() {
 			for (var i = 1; i <= day; i++) {
 				chart[3].options.data[0].dataPoints.push({ x: i, y: 0, label: i });
 				chart[4].options.data[0].dataPoints.push({ x: i, y: 0, label: i });
+				chart[5].options.data[0].dataPoints.push({ x: i, y: 0, label: i });
+				chart[5].options.data[1].dataPoints.push({ x: i, y: 0, label: i });
+				chart[5].options.data[2].dataPoints.push({ x: i, y: 0, label: i });
 			}
 
 			for (var i = 0; i < response.length; i++) {
@@ -99,7 +126,10 @@ $(document).ready(function() {
 				if (resYear == year && resMonth == month) {
 					//Summarize Monthly Report Data
 					chart[3].options.data[0].dataPoints[resDay - 1].y += response[i].income;
+					chart[5].options.data[0].dataPoints[resDay - 1].y += response[i].income;
 					chart[4].options.data[0].dataPoints[resDay - 1].y += response[i].expenditure;
+					chart[5].options.data[1].dataPoints[resDay - 1].y += response[i].expenditure;
+					chart[5].options.data[2].dataPoints[resDay - 1].y += response[i].income - response[i].expenditure;
 
 					if (resDay == day) {
 						//Add Income And Expenditure Data Of Current Date
@@ -123,7 +153,7 @@ $(document).ready(function() {
 				chart[2].options.subtitles[0].text = '';
 
 			$("#loading").hide();
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < 6; i++) {
 				//Set Data To Charts And Render Them
 				chart[i].options.animationEnabled = true;
 				chart[i].options.title.fontWeight = 'normal';
