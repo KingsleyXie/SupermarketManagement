@@ -270,7 +270,6 @@ class Staff: public DATAFILE
 {
 public:
 	Staff(json para): DATAFILE(para) {}
-
 	int Exec()
 	{
 		switch(operation)
@@ -288,75 +287,60 @@ public:
 		return 0;
 	}
 
-	json newData = 
-	{
-		{"jobNo", ""},
-		{"name", ""},
-		{"gender", ""},
-		{"nation", ""},
-		{"nativePlace", ""},
-		{"department", ""},
-		{"postion", ""},
-		{"birthday", ""},
-		{"contact", ""},
-		{"address", ""},
-		{"salary", 0},
-		{"entryTime", ""},
-		{"status", ""}
-	};
-
 private:
 	int Display()
 	{
 		response = preData["staffs"];
 		cout << response;
-
 		return 0;
 	}
 
 	int Add()
 	{
-		newData["jobNo"] = request["jobNo"];
-		newData["name"] = request["name"];
-		newData["gender"] = request["gender"];
-		newData["nation"] = request["nation"];
-		newData["nativePlace"] = request["nativePlace"];
-		newData["department"] = request["department"];
-		newData["postion"] = request["postion"];
-		newData["birthday"] = request["birthday"];
-		newData["contact"] = request["contact"];
-		newData["address"] = request["address"];
-		newData["salary"] = request["salary"];
-		newData["entryTime"] = request["entryTime"];
-		newData["status"] = request["status"];
-		preData["staffs"].push_back(newData);
+		preData["staffs"].push_back(
+		{
+			{"jobNo", request["jobNo"]},
+			{"name", request["name"]},
+			{"gender", request["gender"]},
+			{"nation", request["nation"]},
+			{"nativePlace", request["nativePlace"]},
+			{"department", request["department"]},
+			{"postion", request["postion"]},
+			{"birthday", request["birthday"]},
+			{"contact", request["contact"]},
+			{"address", request["address"]},
+			{"salary", request["salary"]},
+			{"entryTime", request["entryTime"]},
+			{"status", request["status"]}
+		});
 
 		response ={{"code", 0}};
 		cout << response;
-
 		return 0;
 	}
 
 	int Update()
 	{
 		index = request["staffID"];
-		preData["staffs"][index]["jobNo"] = request["jobNo"];
-		preData["staffs"][index]["name"] = request["name"];
-		preData["staffs"][index]["gender"] = request["gender"];
-		preData["staffs"][index]["nation"] = request["nation"];
-		preData["staffs"][index]["nativePlace"] = request["nativePlace"];
-		preData["staffs"][index]["department"] = request["department"];
-		preData["staffs"][index]["postion"] = request["postion"];
-		preData["staffs"][index]["birthday"] = request["birthday"];
-		preData["staffs"][index]["contact"] = request["contact"];
-		preData["staffs"][index]["address"] = request["address"];
-		preData["staffs"][index]["salary"] = request["salary"];
-		preData["staffs"][index]["entryTime"] = request["entryTime"];
-		preData["staffs"][index]["status"] = request["status"];
+		preData["staffs"][index] =
+		{
+			{"jobNo", request["jobNo"]},
+			{"name", request["name"]},
+			{"gender", request["gender"]},
+			{"nation", request["nation"]},
+			{"nativePlace", request["nativePlace"]},
+			{"department", request["department"]},
+			{"postion", request["postion"]},
+			{"birthday", request["birthday"]},
+			{"contact", request["contact"]},
+			{"address", request["address"]},
+			{"salary", request["salary"]},
+			{"entryTime", request["entryTime"]},
+			{"status", request["status"]}
+		};
 
 		response ={{"code", 0}};
 		cout << response;
-
 		return 0;
 	}
 };
