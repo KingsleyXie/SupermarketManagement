@@ -26,20 +26,6 @@ public:
 		dataFile << preData;
 		dataFile.close();
 	}
-
-	json newFinance = 
-	{
-		{"name", ""},
-		{"income", 0},
-		{"expenditure", 0},
-		{"date", 
-			{
-				{"year", 0},
-				{"month", 0},
-				{"day", 0}
-			}
-		}
-	};
 };
 
 class Sales: public DATAFILE
@@ -350,7 +336,6 @@ class Finance: public DATAFILE
 {
 public:
 	Finance(json para): DATAFILE(para) {}
-
 	int Exec()
 	{
 		switch(operation)
@@ -370,24 +355,27 @@ private:
 	{
 		response = preData["finance"];
 		cout << response;
-
 		return 0;
 	}
 
 	int Add()
 	{
-		
-		newFinance["income"] = request["income"];
-		newFinance["expenditure"] = request["expenditure"];
-		newFinance["name"] = request["financeName"];
-		newFinance["date"]["year"] = request["year"];
-		newFinance["date"]["month"] = request["month"];
-		newFinance["date"]["day"] = request["day"];
-		preData["finance"].push_back(newFinance);
+		preData["finance"].push_back(
+		{
+			{"name", request["name"]},
+			{"income", request["income"]},
+			{"expenditure", request["expenditure"]},
+			{"date", 
+				{
+					{"year", request["year"]},
+					{"month", request["month"]},
+					{"day", request["day"]}
+				}
+			}
+		});
 
 		response ={{"code", 0}};
 		cout << response;
-
 		return 0;
 	}
 };
@@ -397,7 +385,6 @@ class Report: public DATAFILE
 {
 public:
 	Report(json para): DATAFILE(para) {}
-
 	int Exec()
 	{
 		switch(operation)
@@ -417,7 +404,6 @@ private:
 	{
 		response = preData["finance"];
 		cout << response;
-
 		return 0;
 	}
 
@@ -426,7 +412,6 @@ private:
 		response["suppliers"] = preData["suppliers"];
 		response["customers"] = preData["customers"];
 		cout << response;
-
 		return 0;
 	}
 };
@@ -477,6 +462,5 @@ int main(int argc, char const *argv[])
 			}
 			break;
 	}
-
 	return 0;
 }
