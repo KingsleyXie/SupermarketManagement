@@ -142,7 +142,6 @@ class Inventory: public DATAFILE
 {
 public:
 	Inventory(json para): DATAFILE(para) {}
-
 	int Exec()
 	{
 		switch(operation)
@@ -160,58 +159,49 @@ public:
 		return 0;
 	}
 
-	json newData = 
-	{
-		{"barcode", ""},
-		{"brand", ""},
-		{"name", ""},
-		{"type", ""},
-		{"unspsc", ""},
-		{"price", 0},
-		{"salePrice", 0},
-		{"inventoryQuantity", 0},
-		{"threshold", 50},
-		{"expiredTime", ""},
-		{"importTime", ""},
-		{"updateTime", ""}
-	};
-
 private:
 	int Display()
 	{
 		response = preData["items"];
 		cout << response;
-
 		return 0;
 	}
 
 	int Add()
 	{
-		newData["barcode"] = request["barcode"];
-		newData["brand"] = request["brand"];
-		newData["name"] = request["name"];
-		newData["type"] = request["type"];
-		newData["unspsc"] = request["unspsc"];
-		newData["price"] = request["price"];
-		newData["salePrice"] = request["salePrice"];
-		newData["inventoryQuantity"] = request["inventoryQuantity"];
-		newData["threshold"] = request["threshold"];
-		newData["expiredTime"] = request["expiredTime"];
-		newData["importTime"] = request["time"];
-		newData["updateTime"] = request["time"];
-		preData["items"].push_back(newData);
+		preData["items"].push_back(
+		{
+			{"barcode", request["barcode"]},
+			{"brand", request["brand"]},
+			{"name", request["name"]},
+			{"type", request["type"]},
+			{"unspsc", request["unspsc"]},
+			{"price", request["price"]},
+			{"salePrice", request["salePrice"]},
+			{"inventoryQuantity", request["inventoryQuantity"]},
+			{"threshold", request["threshold"]},
+			{"expiredTime", request["expiredTime"]},
+			{"importTime", request["time"]},
+			{"updateTime", request["time"]}
+		});
 
-		newFinance["income"] = 0;
 		double amount = request["inventoryQuantity"], price = request["price"];
-		newFinance["expenditure"] = amount * price;
-		newFinance["name"] = "Inventory Auto Record";
-		newFinance["date"]["year"] = request["year"];
-		newFinance["date"]["month"] = request["month"];
-		newFinance["date"]["day"] = request["day"];
-		preData["finance"].push_back(newFinance);
+		preData["finance"].push_back(
+		{
+			{"name", "Inventory Auto Record"},
+			{"income", 0},
+			{"expenditure", amount * price},
+			{"date", 
+				{
+					{"year", request["year"]},
+					{"month", request["month"]},
+					{"day", request["day"]}
+				}
+			}
+		});
 
-		int itemID = preData["items"].size();
 		index = request["supplierID"];
+		int itemID = preData["items"].size();
 		preData["suppliers"][index]["transaction"].push_back(
 		{
 			{"transactionTime", request["time"]},
@@ -223,33 +213,41 @@ private:
 
 		response ={{"code", 0}};
 		cout << response;
-
 		return 0;
 	}
 
 	int Update()
 	{
 		index = request["itemID"];
-		preData["items"][index]["barcode"] = request["barcode"];
-		preData["items"][index]["brand"] = request["brand"];
-		preData["items"][index]["name"] = request["name"];
-		preData["items"][index]["type"] = request["type"];
-		preData["items"][index]["unspsc"] = request["unspsc"];
-		preData["items"][index]["price"] = request["price"];
-		preData["items"][index]["salePrice"] = request["salePrice"];
-		preData["items"][index]["inventoryQuantity"] = request["inventoryQuantity"];
-		preData["items"][index]["threshold"] = request["threshold"];
-		preData["items"][index]["expiredTime"] = request["expiredTime"];
-		preData["items"][index]["updateTime"] = request["time"];
+		preData["items"][index] =
+		{
+			{"barcode", request["barcode"]},
+			{"brand", request["brand"]},
+			{"name", request["name"]},
+			{"type", request["type"]},
+			{"unspsc", request["unspsc"]},
+			{"price", request["price"]},
+			{"salePrice", request["salePrice"]},
+			{"inventoryQuantity", request["inventoryQuantity"]},
+			{"threshold", request["threshold"]},
+			{"expiredTime", request["expiredTime"]},
+			{"updateTime", request["time"]}
+		};
 
-		newFinance["income"] = 0;
 		double amount = request["inventoryQuantity"], price = request["price"];
-		newFinance["expenditure"] = amount * price;
-		newFinance["name"] = "Inventory Auto Record";
-		newFinance["date"]["year"] = request["year"];
-		newFinance["date"]["month"] = request["month"];
-		newFinance["date"]["day"] = request["day"];
-		preData["finance"].push_back(newFinance);
+		preData["finance"].push_back(
+		{
+			{"name", "Inventory Auto Record"},
+			{"income", 0},
+			{"expenditure", amount * price},
+			{"date", 
+				{
+					{"year", request["year"]},
+					{"month", request["month"]},
+					{"day", request["day"]}
+				}
+			}
+		});
 
 		index = request["supplierID"];
 		preData["suppliers"][index]["transaction"].push_back(
@@ -263,7 +261,6 @@ private:
 
 		response ={{"code", 0}};
 		cout << response;
-
 		return 0;
 	}
 };
