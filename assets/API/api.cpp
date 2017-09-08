@@ -4,60 +4,54 @@
 using namespace std;
 using json = nlohmann::json;
 
-fstream dataFile; // File with all the data of this system
-json request, response, preData; // JSON for request, response and existed data record
+fstream data; // File with all the data of this system
+json request, response, record; // JSON for request, response and existed data record
 double rate = 1.5; // Rate from payment to points
-int dest, operation, index; // Request Judgement, Shunt and JSON data array index
+int destination, operation, index; // Request Judgement, Shunt and JSON data array index
 
-class DATAFILE
+class DATA
 // Base class of the whole program
 {
 public:
-	DATAFILE(json input)
+	DATA(json req)
 	{
-		request = input;
-		dataFile.open("data", ios::in | ios::out);
-		dataFile >> preData;
+		request = req;
+		data.open("data", ios::in | ios::out);
+		data >> record;
 	}
 
-	~DATAFILE()
+	~DATA()
 	{
-		dataFile.seekg(0);
-		dataFile << preData;
-		dataFile.close();
+		data.seekg(0);
+		data << record;
+		data.close();
 	}
 };
 
-class Sales: public DATAFILE
+class Sales: public DATA
 // Sales class with Sell and Return function
 {
 public:
-	Sales(json para): DATAFILE(para) {}
-	int Exec()
+	Sales(json req): DATA(req)
 	{
 		switch(operation)
 		{
-			case 1:
-				Sell();
-				break;
-			case 2:
-				Return();
-				break;
+			case 1: sell_item(); break;
+			case 2: return_item(); break;
 		}
-		return 0;
 	}
 
 private:
-	int Sell()
+	int sell_item()
 	{
 		index = request["itemID"];
-		int inventoryQuantity = preData["items"][index]["inventoryQuantity"];
-		preData["items"][index]["inventoryQuantity"] = inventoryQuantity - 1;
+		int inventoryQuantity = record["items"][index]["inventoryQuantity"];
+		record["items"][index]["inventoryQuantity"] = inventoryQuantity - 1;
 
-		preData["finance"].push_back(
+		record["finance"].push_back(
 		{
 			{"name", "Sell Auto Record"},
-			{"income", preData["items"][index]["salePrice"]},
+			{"income", record["items"][index]["salePrice"]},
 			{"expenditure", 0},
 			{"date", 
 				{
@@ -69,33 +63,33 @@ private:
 		});
 
 		index = request["customerID"];
-		double totalPoints = preData["customers"][index]["totalPoints"], points = preData["items"][index]["salePrice"];
+		double totalPoints = record["customers"][index]["totalPoints"], points = record["items"][index]["salePrice"];
 		points *= rate;
 
-		preData["customers"][index]["purchases"].push_back(
+		record["customers"][index]["purchases"].push_back(
 		{
 			{"purchaseTime", request["time"]},
 			{"payment", points / rate},
 			{"points", points}
 		});
-		preData["customers"][index]["totalPoints"] = totalPoints + points;
+		record["customers"][index]["totalPoints"] = totalPoints + points;
 
 		response ={{"code", 0}};
 		cout << response;
 		return 0;
 	}
 
-	int Return()
+	int return_item()
 	{
 		index = request["itemID"];
-		int inventoryQuantity = preData["items"][index]["inventoryQuantity"];
-		preData["items"][index]["inventoryQuantity"] = inventoryQuantity + 1;
+		int inventoryQuantity = record["items"][index]["inventoryQuantity"];
+		record["items"][index]["inventoryQuantity"] = inventoryQuantity + 1;
 
-		preData["finance"].push_back(
+		record["finance"].push_back(
 		{
 			{"name", "Return Auto Record"},
 			{"income", 0},
-			{"expenditure", preData["items"][index]["salePrice"]},
+			{"expenditure", record["items"][index]["salePrice"]},
 			{"date", 
 				{
 					{"year", request["year"]},
@@ -106,16 +100,16 @@ private:
 		});
 
 		index = request["customerID"];
-		double totalPoints = preData["customers"][index]["totalPoints"], points = preData["items"][index]["salePrice"];
+		double totalPoints = record["customers"][index]["totalPoints"], points = record["items"][index]["salePrice"];
 		points *= - rate;
 
-		preData["customers"][index]["purchases"].push_back(
+		record["customers"][index]["purchases"].push_back(
 		{
 			{"purchaseTime", request["time"]},
 			{"payment", points / rate},
 			{"points", points}
 		});
-		preData["customers"][index]["totalPoints"] = totalPoints + points;
+		record["customers"][index]["totalPoints"] = totalPoints + points;
 
 		response ={{"code", 0}};
 		cout << response;
@@ -123,39 +117,31 @@ private:
 	}
 };
 
-class Inventory: public DATAFILE
+class Inventory: public DATA
 // Inventory class with Add, Update function
 {
 public:
-	Inventory(json para): DATAFILE(para) {}
-	int Exec()
+	Inventory(json req): DATA(req)
 	{
 		switch(operation)
 		{
-			case 1:
-				Display();
-				break;
-			case 2:
-				Add();
-				break;
-			case 3:
-				Update();
-				break;
+			case 1: display(); break;
+			case 2: add(); break;
+			case 3: update(); break;
 		}
-		return 0;
 	}
 
 private:
-	int Display()
+	int display()
 	{
-		response = preData["items"];
+		response = record["items"];
 		cout << response;
 		return 0;
 	}
 
-	int Add()
+	int add()
 	{
-		preData["items"].push_back(
+		record["items"].push_back(
 		{
 			{"barcode", request["barcode"]},
 			{"brand", request["brand"]},
@@ -172,7 +158,7 @@ private:
 		});
 
 		double amount = request["inventoryQuantity"], price = request["price"];
-		preData["finance"].push_back(
+		record["finance"].push_back(
 		{
 			{"name", "Inventory Auto Record"},
 			{"income", 0},
@@ -187,8 +173,8 @@ private:
 		});
 
 		index = request["supplierID"];
-		int itemID = preData["items"].size();
-		preData["suppliers"][index]["transaction"].push_back(
+		int itemID = record["items"].size();
+		record["suppliers"][index]["transaction"].push_back(
 		{
 			{"transactionTime", request["time"]},
 			{"itemID", itemID},
@@ -202,10 +188,10 @@ private:
 		return 0;
 	}
 
-	int Update()
+	int update()
 	{
 		index = request["itemID"];
-		preData["items"][index] =
+		record["items"][index] =
 		{
 			{"barcode", request["barcode"]},
 			{"brand", request["brand"]},
@@ -221,7 +207,7 @@ private:
 		};
 
 		double amount = request["inventoryQuantity"], price = request["price"];
-		preData["finance"].push_back(
+		record["finance"].push_back(
 		{
 			{"name", "Inventory Auto Record"},
 			{"income", 0},
@@ -236,7 +222,7 @@ private:
 		});
 
 		index = request["supplierID"];
-		preData["suppliers"][index]["transaction"].push_back(
+		record["suppliers"][index]["transaction"].push_back(
 		{
 			{"transactionTime", request["time"]},
 			{"itemID", request["itemID"]},
@@ -251,39 +237,31 @@ private:
 	}
 };
 
-class Staff: public DATAFILE
+class Staff: public DATA
 // Staff class with Add, Update function
 {
 public:
-	Staff(json para): DATAFILE(para) {}
-	int Exec()
+	Staff(json req): DATA(req)
 	{
 		switch(operation)
 		{
-			case 1:
-				Display();
-				break;
-			case 2:
-				Add();
-				break;
-			case 3:
-				Update();
-				break;
+			case 1: display(); break;
+			case 2: add(); break;
+			case 3: update(); break;
 		}
-		return 0;
 	}
 
 private:
-	int Display()
+	int display()
 	{
-		response = preData["staffs"];
+		response = record["staffs"];
 		cout << response;
 		return 0;
 	}
 
-	int Add()
+	int add()
 	{
-		preData["staffs"].push_back(
+		record["staffs"].push_back(
 		{
 			{"jobNo", request["jobNo"]},
 			{"name", request["name"]},
@@ -305,10 +283,10 @@ private:
 		return 0;
 	}
 
-	int Update()
+	int update()
 	{
 		index = request["staffID"];
-		preData["staffs"][index] =
+		record["staffs"][index] =
 		{
 			{"jobNo", request["jobNo"]},
 			{"name", request["name"]},
@@ -331,38 +309,32 @@ private:
 	}
 };
 
-class Finance: public DATAFILE
+class Finance: public DATA
 // Finance class with Display function
 {
 public:
-	Finance(json para): DATAFILE(para) {}
-	int Exec()
+	Finance(json req): DATA(req)
 	{
 		switch(operation)
 		{
-			case 1:
-				Display();
-				break;
-			case 2:
-				Add();
-				break;
+			case 1: display(); break;
+			case 2: add(); break;
 		}
-		return 0;
 	}
 
 private:
-	int Display()
+	int display()
 	{
-		response = preData["finance"];
+		response = record["finance"];
 		cout << response;
 		return 0;
 	}
 
-	int Add()
+	int add()
 	{
-		preData["finance"].push_back(
+		record["finance"].push_back(
 		{
-			{"name", request["name"]},
+			{"name", request["financeName"]},
 			{"income", request["income"]},
 			{"expenditure", request["expenditure"]},
 			{"date", 
@@ -380,37 +352,31 @@ private:
 	}
 };
 
-class Report: public DATAFILE
+class Report: public DATA
 // Report class with Display function
 {
 public:
-	Report(json para): DATAFILE(para) {}
-	int Exec()
+	Report(json req): DATA(req)
 	{
 		switch(operation)
 		{
-			case 1:
-				FinanceData();
-				break;
-			case 2:
-				ClientsData();
-				break;
+			case 1: finance_data(); break;
+			case 2: clients_data(); break;
 		}
-		return 0;
 	}
 
 private:
-	int FinanceData()
+	int finance_data()
 	{
-		response = preData["finance"];
+		response = record["finance"];
 		cout << response;
 		return 0;
 	}
 
-	int ClientsData()
+	int clients_data()
 	{
-		response["suppliers"] = preData["suppliers"];
-		response["customers"] = preData["customers"];
+		response["suppliers"] = record["suppliers"];
+		response["customers"] = record["customers"];
 		cout << response;
 		return 0;
 	}
@@ -418,49 +384,20 @@ private:
 
 int main(int argc, char const *argv[])
 {
-	json req;
-	cin >> req;
-	dest = req["dest"];
-	operation = req["operation"];
-	
+	cin >> request;
 	cout<<"Content-type: application/json\n\n";
-	
-	switch (dest)
+
+	destination = request["dest"];
+	operation = request["operation"];
+
+	switch (destination)
 	{
-		case 1:
-			{
-				Sales R(req);
-				R.Exec();
-			}
-			break;
-
-		case 2:
-			{
-				Inventory R(req);
-				R.Exec();
-			}
-			break;
-
-		case 3:
-			{
-				Staff R(req);
-				R.Exec();
-			}
-			break;
-
-		case 4:
-			{
-				Finance R(req);
-				R.Exec();
-			}
-			break;
-
-		case 5:
-			{
-				Report R(req);
-				R.Exec();
-			}
-			break;
+		case 1: { Sales obj(request); } break;
+		case 2: { Inventory obj(request); } break;
+		case 3: { Staff obj(request); } break;
+		case 4: { Finance obj(request); } break;
+		case 5: { Report obj(request); } break;
 	}
+
 	return 0;
 }
