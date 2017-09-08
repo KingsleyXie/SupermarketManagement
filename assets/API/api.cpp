@@ -42,14 +42,11 @@ public:
 	};
 };
 
-
-
 class Sales: public DATAFILE
 // Sales class with Sell and Return function
 {
 public:
 	Sales(json para): DATAFILE(para) {}
-
 	int Exec()
 	{
 		switch(operation)
@@ -71,11 +68,6 @@ private:
 		int inventoryQuantity = preData["items"][index]["inventoryQuantity"];
 		preData["items"][index]["inventoryQuantity"] = inventoryQuantity - 1;
 
-		newFinance["income"] = preData["items"][index]["salePrice"];
-		newFinance["name"] = "Sell Auto Record";
-		newFinance["date"]["year"] = request["year"];
-		newFinance["date"]["month"] = request["month"];
-		newFinance["date"]["day"] = request["day"];
 		preData["finance"].push_back(
 		{
 			{"name", "Sell Auto Record"},
@@ -91,21 +83,19 @@ private:
 		});
 
 		index = request["customerID"];
-		double totalPoints = preData["customers"][index]["totalPoints"];
-		double points = newFinance["income"];
+		double totalPoints = preData["customers"][index]["totalPoints"], points = preData["items"][index]["salePrice"];
 		points *= rate;
-		json purchase = {
+
+		preData["customers"][index]["purchases"].push_back(
+		{
 			{"purchaseTime", request["time"]},
 			{"payment", points / rate},
 			{"points", points}
-		};
-
-		preData["customers"][index]["purchases"].push_back(purchase);
+		});
 		preData["customers"][index]["totalPoints"] = totalPoints + points;
 
 		response ={{"code", 0}};
 		cout << response;
-
 		return 0;
 	}
 
@@ -115,29 +105,34 @@ private:
 		int inventoryQuantity = preData["items"][index]["inventoryQuantity"];
 		preData["items"][index]["inventoryQuantity"] = inventoryQuantity + 1;
 
-		newFinance["expenditure"] = preData["items"][index]["salePrice"];
-		newFinance["name"] = "Return Auto Record";
-		newFinance["date"]["year"] = request["year"];
-		newFinance["date"]["month"] = request["month"];
-		newFinance["date"]["day"] = request["day"];
-		preData["finance"].push_back(newFinance);
+		preData["finance"].push_back(
+		{
+			{"name", "Return Auto Record"},
+			{"income", 0},
+			{"expenditure", preData["items"][index]["salePrice"]},
+			{"date", 
+				{
+					{"year", request["year"]},
+					{"month", request["month"]},
+					{"day", request["day"]}
+				}
+			}
+		});
 
 		index = request["customerID"];
-		double totalPoints = preData["customers"][index]["totalPoints"];
-		double points = newFinance["expenditure"];
+		double totalPoints = preData["customers"][index]["totalPoints"], points = preData["items"][index]["salePrice"];
 		points *= - rate;
-		json purchase = {
+
+		preData["customers"][index]["purchases"].push_back(
+		{
 			{"purchaseTime", request["time"]},
 			{"payment", points / rate},
 			{"points", points}
-		};
-
-		preData["customers"][index]["purchases"].push_back(purchase);
+		});
 		preData["customers"][index]["totalPoints"] = totalPoints + points;
 
 		response ={{"code", 0}};
 		cout << response;
-
 		return 0;
 	}
 };
