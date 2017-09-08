@@ -7,9 +7,7 @@ using json = nlohmann::json;
 fstream dataFile; // File with all the data of this system
 json request, response, preData; // JSON for request, response and existed data record
 double rate = 1.5; // Rate from payment to points
-int  dest, operation, index; // Request Judgement, Shunt and JSON data array index
-
-
+int dest, operation, index; // Request Judgement, Shunt and JSON data array index
 
 class DATAFILE
 // Base class of the whole program
@@ -78,7 +76,19 @@ private:
 		newFinance["date"]["year"] = request["year"];
 		newFinance["date"]["month"] = request["month"];
 		newFinance["date"]["day"] = request["day"];
-		preData["finance"].push_back(newFinance);
+		preData["finance"].push_back(
+		{
+			{"name", "Sell Auto Record"},
+			{"income", preData["items"][index]["salePrice"]},
+			{"expenditure", 0},
+			{"date", 
+				{
+					{"year", request["year"]},
+					{"month", request["month"]},
+					{"day", request["day"]}
+				}
+			}
+		});
 
 		index = request["customerID"];
 		double totalPoints = preData["customers"][index]["totalPoints"];
@@ -445,10 +455,6 @@ private:
 	}
 };
 
-
-
-
-
 int main(int argc, char const *argv[])
 {
 	json req;
@@ -456,7 +462,7 @@ int main(int argc, char const *argv[])
 	dest = req["dest"];
 	operation = req["operation"];
 	
-	cout<<"Content-type:application/json\n\n";
+	cout<<"Content-type: application/json\n\n";
 	
 	switch (dest)
 	{
@@ -493,11 +499,6 @@ int main(int argc, char const *argv[])
 				Report R(req);
 				R.Exec();
 			}
-			break;
-
-		default:
-			response ={{"code", 1}};
-			cout << response;
 			break;
 	}
 
