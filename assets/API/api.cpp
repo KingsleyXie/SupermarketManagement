@@ -15,14 +15,16 @@ class DATA
 public:
 	DATA(json req)
 	{
-		request = req;
-		data.open("data", ios::in | ios::out);
+		data.open("data.json", ios::in);
 		data >> record;
+		data.close();
+		
+		request = req;
+		data.open("data.json", ios::out);
 	}
 
 	~DATA()
 	{
-		data.seekg(0);
 		data << record;
 		data.close();
 	}
