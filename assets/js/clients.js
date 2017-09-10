@@ -3,12 +3,10 @@ $("select").material_select();
 $(".button-collapse").sideNav();
 
 function suppliersPY() {
-	$.ajax({
-		type: 'POST',
-		url: './assets/API/api.cgi',
-		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify({"dest": 5, "operation": 2}),
-		success: function(response) {
+	$.post(
+		'./assets/API/api.cgi',
+		JSON.stringify({"dest": 5, "operation": 2}),
+		function(response) {
 			$("#display").hide(600);
 			setTimeout(function () {
 				$("#display").html('');
@@ -60,16 +58,18 @@ function suppliersPY() {
 			}, 600);
 			$("#display").show(700);
 		}
+	)
+
+	.fail(function() {
+		Materialize.toast('获取数据出错', 3000);
 	});
 }
 
 function customersPY() {
-	$.ajax({
-		type: 'POST',
-		url: './assets/API/api.cgi',
-		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify({"dest": 5, "operation": 2}),
-		success: function(response) {
+	$.post(
+		'./assets/API/api.cgi',
+		JSON.stringify({"dest": 5, "operation": 2}),
+		function(response) {
 			$("#display").hide(600);
 			setTimeout(function () {
 				$("#display").html('');
@@ -121,5 +121,9 @@ function customersPY() {
 			}, 600);
 			$("#display").show(700);
 		}
+	)
+
+	.fail(function() {
+		Materialize.toast('获取数据出错', 3000);
 	});
 }
