@@ -10,7 +10,7 @@ function suppliersPY() {
 			$("#display").hide(600);
 			setTimeout(function () {
 				$("#display").html('');
-				for (var index = 0; index < response.suppliers.length; index++) {
+				$.each(response.suppliers, function(index, supplier) {
 					$("#display").append(
 					'<div class="card">' +
 						'<div class="card-content">' +
@@ -24,7 +24,7 @@ function suppliersPY() {
 								'<tbody>' +
 									'<tr>' +
 										'<td>' + index + '</td>' +
-										'<td>' + response.suppliers[index].supplier + '</td>' +
+										'<td>' + supplier.supplier + '</td>' +
 									'</tr>' +
 								'</tbody>' +
 							'</table>' +
@@ -44,17 +44,17 @@ function suppliersPY() {
 							'</div>' +
 						'</div>' +
 					'</div>');
-					for (var i = 0; i < response.suppliers[index].transaction.length; i++) {
+					$.each(supplier.transaction, function(i, transaction) {
 						$("#py-details" + index).append(
 						'<tr>' +
-							'<td>' + response.suppliers[index].transaction[i].transactionTime + '</td>' +
-							'<td>' + response.suppliers[index].transaction[i].itemID + '</td>' +
-							'<td>' + response.suppliers[index].transaction[i].itemName + '</td>' +
-							'<td>' + response.suppliers[index].transaction[i].itemAmount + '</td>' +
-							'<td>' + response.suppliers[index].transaction[i].itemPrice + '</td>' +
+							'<td>' + transaction.transactionTime + '</td>' +
+							'<td>' + transaction.itemID + '</td>' +
+							'<td>' + transaction.itemName + '</td>' +
+							'<td>' + transaction.itemAmount + '</td>' +
+							'<td>' + transaction.itemPrice + '</td>' +
 						'</tr>');
-					}
-				}
+					});
+				});
 			}, 600);
 			$("#display").show(700);
 		}
@@ -73,7 +73,7 @@ function customersPY() {
 			$("#display").hide(600);
 			setTimeout(function () {
 				$("#display").html('');
-				for (var index = 0; index < response.customers.length; index++) {
+				$.each(response.customers, function(index, customer) {
 					$("#display").append(
 					'<div class="card">' +
 						'<div class="card-content">' +
@@ -89,9 +89,9 @@ function customersPY() {
 								'<tbody>' +
 									'<tr>' +
 										'<td>' + index + '</td>' +
-										'<td>' + response.customers[index].customerName + '</td>' +
-										'<td>' + response.customers[index].customerNo + '</td>' +
-										'<td>' + response.customers[index].totalPoints + '</td>' +
+										'<td>' + customer.customerName + '</td>' +
+										'<td>' + customer.customerNo + '</td>' +
+										'<td>' + customer.totalPoints + '</td>' +
 									'</tr>' +
 								'</tbody>' +
 							'</table>' +
@@ -109,15 +109,15 @@ function customersPY() {
 							'</div>' +
 						'</div>' +
 					'</div>');
-					for (var i = 0; i < response.customers[index].purchases.length; i++) {
+					$.each(customer.purchases, function(i, purchase) {
 						$("#py-details" + index).append(
 						'<tr>' +
-							'<td>' + response.customers[index].purchases[i].purchaseTime + '</td>' +
-							'<td>' + response.customers[index].purchases[i].payment + '</td>' +
-							'<td>' + response.customers[index].purchases[i].points + '</td>' +
+							'<td>' + purchase.purchaseTime + '</td>' +
+							'<td>' + purchase.payment + '</td>' +
+							'<td>' + purchase.points + '</td>' +
 						'</tr>');
-					}
-				}
+					});
+				});
 			}, 600);
 			$("#display").show(700);
 		}
