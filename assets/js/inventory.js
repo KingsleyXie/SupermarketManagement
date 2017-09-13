@@ -36,12 +36,10 @@ $(document).ready(function() {
 		data["salePrice"] = parseFloat(data["salePrice"]);
 		data = JSON.stringify(data);
 
-		$.ajax({
-			type: 'POST',
-			url: './assets/API/api.cgi',
-			contentType: 'application/json; charset=utf-8',
-			data: data,
-			success: function(response) {
+		$.post(
+			'./assets/API/api.cgi',
+			data,
+			function(response) {
 				if (response.code == 0) {
 					Materialize.toast('货物信息' + (modifying ? '修改' : '添加') + '成功！', 1700);
 					setTimeout(function () {
@@ -58,6 +56,10 @@ $(document).ready(function() {
 					}, 2000);
 				}
 			}
+		)
+
+		.fail(function() {
+			Materialize.toast('操作失败', 3000);
 		});
 	});
 });
@@ -88,6 +90,7 @@ function getDataFromAPI() {
 				}, 0);
 			}
 		},
+
 		error: function() {
 			Materialize.toast("未找到商品信息，请手动录入数据", 1700);
 			toggle();
@@ -131,31 +134,33 @@ function toggle() {
 }
 
 function display() {
-	$.ajax({
-		type: 'POST',
-		url: './assets/API/api.cgi',
-		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify({"dest": 2, "operation": 1}),
-		success: function(response) {
+	$.post(
+		'./assets/API/api.cgi',
+		JSON.stringify({"dest": 2, "operation": 1}),
+		function(response) {
 			$("#display").html('');
-			for (var i = 0; i < response.length; i++) {
+			$.each(response, function(i, inv) {
 				$("#display").append(
-				'<tr' + (response[i].inventoryQuantity > response[i].threshold ? '' : ' class="red lighten-1"') + '>' +
+				'<tr' + (inv.inventoryQuantity > inv.threshold ? '' : ' class="red lighten-1"') + '>' +
 					'<td>' + i + '</td>' +
-					'<td>' + response[i].barcode + '</td>' +
-					'<td>' + response[i].brand + '</td>' +
-					'<td>' + response[i].name + '</td>' +
-					'<td>' + response[i].unspsc + '</td>' +
-					'<td>' + response[i].type + '</td>' +
-					'<td>' + response[i].price + '</td>' +
-					'<td>' + response[i].salePrice + '</td>' +
-					'<td>' + response[i].inventoryQuantity + '</td>' +
-					'<td>' + response[i].threshold + '</td>' +
-					'<td>' + response[i].expiredTime + '</td>' +
-					'<td>' + response[i].importTime + '</td>' +
-					'<td>' + response[i].updateTime + '</td>' +
+					'<td>' + inv.barcode + '</td>' +
+					'<td>' + inv.brand + '</td>' +
+					'<td>' + inv.name + '</td>' +
+					'<td>' + inv.unspsc + '</td>' +
+					'<td>' + inv.type + '</td>' +
+					'<td>' + inv.price + '</td>' +
+					'<td>' + inv.salePrice + '</td>' +
+					'<td>' + inv.inventoryQuantity + '</td>' +
+					'<td>' + inv.threshold + '</td>' +
+					'<td>' + inv.expiredTime + '</td>' +
+					'<td>' + inv.importTime + '</td>' +
+					'<td>' + inv.updateTime + '</td>' +
 				'</tr>');
-			}
+			});
 		}
+	)
+
+	.fail(function() {
+		Materialize.toast('获取数据出错', 3000);
 	});
 }
