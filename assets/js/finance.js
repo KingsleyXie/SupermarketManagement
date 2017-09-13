@@ -1,18 +1,9 @@
-var date = new Date(),
-	year = date.getFullYear(),
-	month = date.getMonth() + 1,
-	day = date.getDate();
-
 $(document).ready(function() {
-	$(".modal").modal();
-	$("select").material_select();
-	$(".button-collapse").sideNav();
-	
-	display(); $("#loading").hide();
+	display();
 
 	$("#finance").submit(function(e) {
 		e.preventDefault();
-
+		
 		data = {"dest": 4, "operation": 2, "year": year, "month": month, "day": day};
 		$(this).serializeArray().map(function(x){data[x.name] = x.value;});
 		data["income"] = parseFloat(data["income"]);

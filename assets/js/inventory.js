@@ -1,27 +1,12 @@
-display(); $("#loading").hide();
-var modifying = false;
-
-var date = new Date(),
-	year = date.getFullYear(),
-	month = date.getMonth() + 1,
-	day = date.getDate(),
-	time = year + '-' + month + '-' + day;
-
 $(document).ready(function() {
-	$(".modal").modal();
-	$("select").material_select();
-	$(".button-collapse").sideNav();
-	$(".datepicker").pickadate({
-		selectMonths: true,
-		selectYears: 15,
-		format: 'yyyy-mm-dd'
-	});
+	display();
 
 	$("#inventory").submit(function(e) {
 		e.preventDefault();
+		
 		data = {
 			"dest": 2,
-			"operation": (modifying ? 3 : 2),
+			"operation": (modifyingInv ? 3 : 2),
 			"year": year,
 			"month": month,
 			"day": day,
@@ -41,7 +26,7 @@ $(document).ready(function() {
 			data,
 			function(response) {
 				if (response.code == 0) {
-					Materialize.toast('货物信息' + (modifying ? '修改' : '添加') + '成功！', 1700);
+					Materialize.toast('货物信息' + (modifyingInv ? '修改' : '添加') + '成功！', 1700);
 					setTimeout(function () {
 						$("#inventory").modal('close');
 						display();
@@ -99,7 +84,7 @@ function getDataFromAPI() {
 }
 
 function update() {
-	modifying = true;
+	modifyingInv = true;
 	var info = $($("#display > tr")[$("#itemID").val()]).children();
 	
 	//Show Form In Modifying Mode
@@ -125,12 +110,6 @@ function update() {
 	setTimeout(function () {
 		$("#inventory-quantity").focus();
 	}, 0);
-}
-
-function toggle() {
-	$("#progress").hide();
-	$("#add-init").hide(500);
-	$("#item-info").show(500);
 }
 
 function display() {
@@ -163,4 +142,10 @@ function display() {
 	.fail(function() {
 		Materialize.toast('获取数据出错', 3000);
 	});
+}
+
+function toggle() {
+	$("#progress").hide();
+	$("#add-init").hide(500);
+	$("#item-info").show(500);
 }

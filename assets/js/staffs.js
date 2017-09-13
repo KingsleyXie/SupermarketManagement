@@ -1,21 +1,11 @@
-display(); $("#loading").hide();
-var modifying = false;
-
 $(document).ready(function() {
-	$(".modal").modal();
-	$("select").material_select();
-	$(".button-collapse").sideNav();
-	$(".datepicker").pickadate({
-    	selectMonths: true,
-    	selectYears: 15,
-    	format: 'yyyy-mm-dd'
-    });
+	display();
     $("#entry-time").pickadate('picker').set('select', new Date()).trigger('change');
 	
 	$("#staff").submit(function(e) {
 		e.preventDefault();
 
-		data = {"dest": 3, "operation": (modifying ? 3 : 2)};
+		data = {"dest": 3, "operation": (modifyingStaff ? 3 : 2)};
 		$(this).serializeArray().map(function(x){data[x.name] = x.value;});
 		data["staffID"] = parseFloat($("#ID").val());
 		data["salary"] = parseFloat(data["salary"]);
@@ -26,7 +16,7 @@ $(document).ready(function() {
 			data,
 			function(response) {
 				if (response.code == 0) {
-					Materialize.toast('员工信息' + (modifying ? '修改' : '添加') + '成功！', 1700);
+					Materialize.toast('员工信息' + (modifyingStaff ? '修改' : '添加') + '成功！', 1700);
 					setTimeout(function () {
 						$("#staff").modal('close');
 						display();
@@ -47,7 +37,7 @@ $(document).ready(function() {
 });
 
 function update() {
-	modifying = true;
+	modifyingStaff = true;
 	var info = $($("#display > tr")[$("#ID").val()]).children();
 	
 	//Show Form In Modifying Mode

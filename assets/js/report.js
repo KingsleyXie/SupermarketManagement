@@ -1,10 +1,3 @@
-$(".button-collapse").sideNav();
-
-var date = new Date(),
-	year = date.getFullYear(),
-	month = date.getMonth() + 1,
-	day = date.getDate();
-
 var chart = [
 	new CanvasJS.Chart("chart0", {
 		title: { text: year + '年' + month + '月' + day + '日收入报表' },

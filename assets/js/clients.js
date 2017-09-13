@@ -1,7 +1,3 @@
-$(".modal").modal();
-$("select").material_select();
-$(".button-collapse").sideNav();
-
 function suppliersPY() {
 	$.post(
 		'./assets/API/api.cgi',
