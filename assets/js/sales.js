@@ -15,12 +15,10 @@ $("#sell").submit(function(e) {
 	$(this).serializeArray().map(function(x){data[x.name] = parseInt(x.value);}); 
 	data = JSON.stringify(data);
 
-	$.ajax({
-		type: 'POST',
-		url: './assets/API/api.cgi',
-		contentType: 'application/json; charset=utf-8',
-		data: data,
-		success: function(response) {
+	$.post(
+		'./assets/API/api.cgi',
+		data,
+		function(response) {
 			if (response.code == 0) {
 				Materialize.toast('购物记录添加成功！', 2000);
 				setTimeout(function () {
@@ -28,6 +26,10 @@ $("#sell").submit(function(e) {
 				}, 1700);
 			}
 		}
+	)
+
+	.fail(function() {
+		Materialize.toast('操作失败', 3000);
 	});
 });
 
@@ -38,12 +40,10 @@ $("#return").submit(function(e) {
 	$(this).serializeArray().map(function(x){data[x.name] = parseInt(x.value);});
 	data = JSON.stringify(data);
 
-	$.ajax({
-		type: 'POST',
-		url: './assets/API/api.cgi',
-		contentType: 'application/json; charset=utf-8',
-		data: data,
-		success: function(response) {
+	$.post(
+		'./assets/API/api.cgi',
+		data,
+		function(response) {
 			if (response.code == 0) {
 				Materialize.toast('退货记录添加成功！', 2000);
 				window.setTimeout(function () {
@@ -51,5 +51,9 @@ $("#return").submit(function(e) {
 				}, 1700);
 			}
 		}
+	)
+
+	.fail(function() {
+		Materialize.toast('操作失败', 3000);
 	});
 });
