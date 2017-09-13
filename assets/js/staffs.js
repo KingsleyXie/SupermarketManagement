@@ -21,12 +21,10 @@ $(document).ready(function() {
 		data["salary"] = parseFloat(data["salary"]);
 		data = JSON.stringify(data);
 
-		$.ajax({
-			type: 'POST',
-			url: './assets/API/api.cgi',
-			contentType: 'application/json; charset=utf-8',
-			data: data,
-			success: function(response) {
+		$.post(
+			'./assets/API/api.cgi',
+			data,
+			function(response) {
 				if (response.code == 0) {
 					Materialize.toast('员工信息' + (modifying ? '修改' : '添加') + '成功！', 1700);
 					setTimeout(function () {
@@ -40,6 +38,10 @@ $(document).ready(function() {
 					}, 2000);
 				}
 			}
+		)
+
+		.fail(function() {
+			Materialize.toast('操作失败', 3000);
 		});
 	});
 });
@@ -75,32 +77,34 @@ function update() {
 }
 
 function display() {
-	$.ajax({
-		type: 'POST',
-		url: './assets/API/api.cgi',
-		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify({"dest": 3, "operation": 1}),
-		success: function(response) {
+	$.post(
+		'./assets/API/api.cgi',
+		JSON.stringify({"dest": 3, "operation": 1}),
+		function(response) {
 			$("#display").html('');
-			for (var i = 0; i < response.length; i++) {
+			$.each(response, function(i, staff) {
 				$("#display").append(
 					'<tr id="ID' + i + '">' +
 						'<td>' + i + '</td>' +
-						'<td>' + response[i].jobNo + '</td>' +
-						'<td>' + response[i].name + '</td>' +
-						'<td>' + response[i].gender + '</td>' +
-						'<td>' + response[i].nation + '</td>' +
-						'<td>' + response[i].nativePlace + '</td>' +
-						'<td>' + response[i].department + '</td>' +
-						'<td>' + response[i].postion + '</td>' +
-						'<td>' + response[i].birthday + '</td>' +
-						'<td>' + response[i].contact + '</td>' +
-						'<td>' + response[i].address + '</td>' +
-						'<td>' + response[i].salary + '</td>' +
-						'<td>' + response[i].entryTime + '</td>' +
-						'<td>' + response[i].status + '</td>' +
+						'<td>' + staff.jobNo + '</td>' +
+						'<td>' + staff.name + '</td>' +
+						'<td>' + staff.gender + '</td>' +
+						'<td>' + staff.nation + '</td>' +
+						'<td>' + staff.nativePlace + '</td>' +
+						'<td>' + staff.department + '</td>' +
+						'<td>' + staff.postion + '</td>' +
+						'<td>' + staff.birthday + '</td>' +
+						'<td>' + staff.contact + '</td>' +
+						'<td>' + staff.address + '</td>' +
+						'<td>' + staff.salary + '</td>' +
+						'<td>' + staff.entryTime + '</td>' +
+						'<td>' + staff.status + '</td>' +
 					'</tr>');
-			}
+			});
 		}
+	)
+
+	.fail(function() {
+		Materialize.toast('获取数据出错', 3000);
 	});
 }
