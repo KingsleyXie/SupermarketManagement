@@ -15,16 +15,15 @@ class DATA
 public:
 	DATA(json req)
 	{
+		request = req;
 		data.open("data.json", ios::in);
 		data >> record;
 		data.close();
-		
-		request = req;
-		data.open("data.json", ios::out);
 	}
 
 	~DATA()
 	{
+		data.open("data.json", ios::out);
 		data << record;
 		data.close();
 	}
@@ -205,6 +204,7 @@ private:
 			{"inventoryQuantity", request["inventoryQuantity"]},
 			{"threshold", request["threshold"]},
 			{"expiredTime", request["expiredTime"]},
+			{"importTime", record["items"][index]["importTime"]},
 			{"updateTime", request["time"]}
 		};
 
