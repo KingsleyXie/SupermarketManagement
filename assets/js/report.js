@@ -47,7 +47,8 @@ var chart = [
 			legendText: '收入金额',
 			indexLabel: "{y}",
 			dataPoints: []
-		}, {
+		},
+		{
 			type: 'column',
 			color: '#ff7043',
 			showInLegend: true,
@@ -86,13 +87,15 @@ var chart = [
 			showInLegend: true,
 			legendText: '收入金额',
 			dataPoints: []
-		}, {
+		},
+		{
 			type: 'line',
 			color: '#ff7043',
 			showInLegend: true,
 			legendText: '支出金额',
 			dataPoints: []
-		}, {
+		},
+		{
 			type: 'line',
 			color: '#42a5f5',
 			showInLegend: true,
@@ -103,51 +106,50 @@ var chart = [
 ];
 
 $(document).ready(function() {
-	$.ajax({
-		type: 'POST',
-		url: './assets/API/api.cgi',
-		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify({"dest": 5, "operation": 1}),
-		success: function(response) {
+	//Use 'dp' Function to Make Access Of 'dataPoints' More Convenient
+	function dp(chartIndex, dataIndex) {
+		return chart[chartIndex].options.data[dataIndex].dataPoints;
+	}
+
+	$.post(
+		'./assets/API/api.cgi',
+		JSON.stringify({"dest": 5, "operation": 1}),
+		function(response) {
 			//Initialize Data Of Monthly Report Chart
 			for (var i = 1; i <= day; i++) {
-				dataPoints(3, 0).push({ x: i, y: 0, label: i });
-				dataPoints(4, 0).push({ x: i, y: 0, label: i });
-				dataPoints(5, 0).push({ x: i, y: 0, label: i });
-				dataPoints(5, 1).push({ x: i, y: 0, label: i });
-				dataPoints(5, 2).push({ x: i, y: 0, label: i });
+				new Array(dp(3,0), dp(4,0), dp(5,0), dp(5,1), dp(5,2)).
+				forEach(function(d) {
+					d.push({ x: i, y: 0, label: i });
+				})
 			}
 
-			for (var i = 0; i < response.length; i++) {
-				var resYear = response[i].date.year,
-					resMonth = response[i].date.month,
-					resDay = response[i].date.day;
-
-				if (resYear == year && resMonth == month) {
+			$.each(response, function(i, f) {
+				//Iterate Each Finance Data As 'f'
+				if (f.date.year == year && f.date.month == month) {
 					//Summarize Monthly Report Data
-					dataPoints(3, 0)[resDay - 1].y += response[i].income;
-					dataPoints(5, 0)[resDay - 1].y += response[i].income;
-					dataPoints(4, 0)[resDay - 1].y += response[i].expenditure;
-					dataPoints(5, 1)[resDay - 1].y += response[i].expenditure;
-					dataPoints(5, 2)[resDay - 1].y += response[i].income - response[i].expenditure;
+					dp(3, 0)[f.date.day - 1].y += f.income;
+					dp(4, 0)[f.date.day - 1].y += f.expenditure;
+					dp(5, 0)[f.date.day - 1].y += f.income;
+					dp(5, 1)[f.date.day - 1].y += f.expenditure;
+					dp(5, 2)[f.date.day - 1].y += (f.income - f.expenditure);
 
-					if (resDay == day) {
+					if (f.date.day == day) {
 						//Add Income And Expenditure Data Of Current Date
-						response[i].income != 0 ?
-						dataPoints(0, 0).push({ y: response[i].income, indexLabel: response[i].name }) : '';
+						f.income != 0 ?
+						dp(0, 0).push({ y: f.income, indexLabel: f.name }) : '';
 
-						response[i].expenditure != 0 ?
-						dataPoints(1, 0).push({ y: response[i].expenditure, indexLabel: response[i].name }) : '';						
+						f.expenditure != 0 ?
+						dp(1, 0).push({ y: f.expenditure, indexLabel: f.name }) : '';						
 					
-						dataPoints(2, 0).push({ y: response[i].income, label: response[i].name });
-						dataPoints(2, 1).push({ y: response[i].expenditure, label: response[i].name });
+						dp(2, 0).push({ y: f.income, label: f.name });
+						dp(2, 1).push({ y: f.expenditure, label: f.name });
 					}
 				}
-			}
+			});
 
-			if (dataPoints(0, 0).length) chart[0].options.subtitles[0].text = '';
-			if (dataPoints(1, 0).length) chart[1].options.subtitles[0].text = '';
-			if (dataPoints(2, 0).length || dataPoints(2, 1).length)
+			if (dp(0, 0).length) chart[0].options.subtitles[0].text = '';
+			if (dp(1, 0).length) chart[1].options.subtitles[0].text = '';
+			if (dp(2, 0).length || dp(2, 1).length)
 				chart[2].options.subtitles[0].text = '';
 
 			$("#loading").hide();
@@ -157,14 +159,12 @@ $(document).ready(function() {
 				chart[i].options.title.fontWeight = 'normal';
 				(function(i){
 					$("#chart" + i).one('inview', function(event, isInView) {
-						if (isInView) { chart[i].render(); }
+						if (isInView) {
+							chart[i].render();
+						}
 					});
 				})(i);
 			}
 		}
-	});
+	);
 });
-
-function dataPoints(chartIndex, dataIndex) {
-	return chart[chartIndex].options.data[dataIndex].dataPoints;
-}
