@@ -175,7 +175,7 @@ private:
 
 		index = request["supplierID"];
 		int itemID = record["items"].size();
-		record["suppliers"][index]["transaction"].push_back(
+		record["suppliers"][index]["transactions"].push_back(
 		{
 			{"transactionTime", request["time"]},
 			{"itemID", itemID},
@@ -224,7 +224,7 @@ private:
 		});
 
 		index = request["supplierID"];
-		record["suppliers"][index]["transaction"].push_back(
+		record["suppliers"][index]["transactions"].push_back(
 		{
 			{"transactionTime", request["time"]},
 			{"itemID", request["itemID"]},
@@ -363,7 +363,8 @@ public:
 		switch(operation)
 		{
 			case 1: finance_data(); break;
-			case 2: clients_data(); break;
+			case 2: suppliers_data(); break;
+			case 3: customers_data(); break;
 		}
 	}
 
@@ -375,9 +376,15 @@ private:
 		return 0;
 	}
 
-	int clients_data()
+	int suppliers_data()
 	{
 		response["suppliers"] = record["suppliers"];
+		cout << response;
+		return 0;
+	}
+
+	int customers_data()
+	{
 		response["customers"] = record["customers"];
 		cout << response;
 		return 0;
@@ -389,7 +396,7 @@ int main(int argc, char const *argv[])
 	cin >> request;
 	cout<<"Content-type: application/json\n\n";
 
-	destination = request["dest"];
+	destination = request["destination"];
 	operation = request["operation"];
 
 	switch (destination)
