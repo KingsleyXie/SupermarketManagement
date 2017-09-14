@@ -12,6 +12,8 @@ var date = new Date(),
 
 var modifyingInv = false, vmodifyingStaff = false;
 
+$('[type="number"]').attr({ "min": "0" });
+
 $(".datepicker").pickadate({
 	selectMonths: true,
 	selectYears: 15,

@@ -66,7 +66,7 @@ function getDataFromAPI() {
 				$("#name").val(response.result.name);
 				$("#unspsc").val(response.result.unspsc);
 				$("#type").val(response.result.type);
-				$("#price").val(response.result.price);
+				$("#price").val(response.result.price.replace('￥', ''));
 				$("label").addClass("active");
 
 				toggle();
@@ -118,6 +118,7 @@ function display() {
 		JSON.stringify({"destination": 2, "operation": 1}),
 		function(response) {
 			$("#display").html('');
+			$("#itemID").attr("max", response.length - 1);
 			$.each(response, function(i, inv) {
 				$("#display").append(
 				'<tr' + (inv.inventoryQuantity > inv.threshold ? '' : ' class="red lighten-1"') + '>' +
