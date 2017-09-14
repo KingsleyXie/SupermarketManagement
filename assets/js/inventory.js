@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	display();
+	limitSet();
 
 	$("#inventory").submit(function(e) {
 		e.preventDefault();
@@ -38,6 +39,7 @@ $(document).ready(function() {
 						$("#add-init").show();
 						$("input").val('');
 						$("label").removeClass("active");
+						limitSet();
 					}, 2000);
 				}
 			}
@@ -143,6 +145,16 @@ function display() {
 	.fail(function() {
 		Materialize.toast('获取数据出错', 3000);
 	});
+}
+
+function limitSet() {
+	$.post(
+		'./assets/API/api.cgi',
+		JSON.stringify({"destination": 1, "operation": 3}),
+		function(response) {
+			$('[name="supplierID"]').attr("max", response.suppliers - 1)
+		}
+	);
 }
 
 function toggle() {

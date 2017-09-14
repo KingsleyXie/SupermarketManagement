@@ -126,6 +126,7 @@ private:
 		response =
 		{
 			{"items", record["items"].size()},
+			{"suppliers", record["suppliers"].size()},
 			{"customers", record["customers"].size()}
 		};
 		cout << response;

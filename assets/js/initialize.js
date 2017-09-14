@@ -10,7 +10,7 @@ var date = new Date(),
 	day = date.getDate(),
 	time = year + '-' + month + '-' + day;
 
-var modifyingInv = false, vmodifyingStaff = false;
+var modifyingInv = false, modifyingStaff = false;
 
 $('[type="number"]').attr({ "min": "0" });
 

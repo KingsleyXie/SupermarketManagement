@@ -1,3 +1,5 @@
+limitSet();
+
 $("#sell").submit(function(e) {
 	e.preventDefault();
 
@@ -72,9 +74,5 @@ function limitSet() {
 			$('[name="itemID"]').attr("max", response.items - 1)
 			$('[name="customerID"]').attr("max", response.customers - 1)
 		}
-	)
-
-	.fail(function() {
-		Materialize.toast('获取信息出错', 3000);
-	});
+	);
 }
