@@ -39,6 +39,7 @@ public:
 		{
 			case 1: sell_item(); break;
 			case 2: return_item(); break;
+			case 3: input_limit(); break;
 		}
 	}
 
@@ -116,6 +117,17 @@ private:
 		record["customers"][index]["totalPoints"] = totalPoints + points * rate;
 
 		response ={{"code", 0}};
+		cout << response;
+		return 0;
+	}
+
+	int input_limit()
+	{
+		response =
+		{
+			{"items", record["items"].size()},
+			{"customers", record["customers"].size()}
+		};
 		cout << response;
 		return 0;
 	}

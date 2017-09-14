@@ -70,6 +70,7 @@
 - Sales
     - sell_item()                                    // request["operation"] == 1
     - return_item()                               // request["operation"] == 2
+    - input_limit()                               // request["operation"] == 3
 
 ### request["destination"] == 2
 - Inventory
