@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$("#finance").submit(function(e) {
 		e.preventDefault();
 		
-		data = {"dest": 4, "operation": 2, "year": year, "month": month, "day": day};
+		data = {"destination": 4, "operation": 2, "year": year, "month": month, "day": day};
 		$(this).serializeArray().map(function(x){data[x.name] = x.value;});
 		data["income"] = parseFloat(data["income"]);
 		data["expenditure"] = parseFloat(data["expenditure"]);
@@ -33,7 +33,7 @@ $(document).ready(function() {
 function display() {
 	$.post(
 		'./assets/API/api.cgi',
-		JSON.stringify({"dest": 4, "operation": 1}),
+		JSON.stringify({"destination": 4, "operation": 1}),
 		function(response) {
 			$("#display").html('');
 			$.each(response, function(i, finance) {

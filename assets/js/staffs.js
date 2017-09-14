@@ -5,7 +5,7 @@ $(document).ready(function() {
 	$("#staff").submit(function(e) {
 		e.preventDefault();
 
-		data = {"dest": 3, "operation": (modifyingStaff ? 3 : 2)};
+		data = {"destination": 3, "operation": (modifyingStaff ? 3 : 2)};
 		$(this).serializeArray().map(function(x){data[x.name] = x.value;});
 		data["staffID"] = parseFloat($("#ID").val());
 		data["salary"] = parseFloat(data["salary"]);
@@ -69,7 +69,7 @@ function update() {
 function display() {
 	$.post(
 		'./assets/API/api.cgi',
-		JSON.stringify({"dest": 3, "operation": 1}),
+		JSON.stringify({"destination": 3, "operation": 1}),
 		function(response) {
 			$("#display").html('');
 			$.each(response, function(i, staff) {

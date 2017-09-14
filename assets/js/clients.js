@@ -1,7 +1,7 @@
 function suppliersPY() {
 	$.post(
 		'./assets/API/api.cgi',
-		JSON.stringify({"dest": 5, "operation": 2}),
+		JSON.stringify({"destination": 5, "operation": 2}),
 		function(response) {
 			$("#display").hide(600);
 			setTimeout(function () {
@@ -64,7 +64,7 @@ function suppliersPY() {
 function customersPY() {
 	$.post(
 		'./assets/API/api.cgi',
-		JSON.stringify({"dest": 5, "operation": 2}),
+		JSON.stringify({"destination": 5, "operation": 2}),
 		function(response) {
 			$("#display").hide(600);
 			setTimeout(function () {

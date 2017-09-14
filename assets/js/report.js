@@ -106,7 +106,7 @@ $(document).ready(function() {
 
 	$.post(
 		'./assets/API/api.cgi',
-		JSON.stringify({"dest": 5, "operation": 1}),
+		JSON.stringify({"destination": 5, "operation": 1}),
 		function(response) {
 			//Initialize Data Of Monthly Report Chart
 			for (var i = 1; i <= day; i++) {

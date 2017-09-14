@@ -1,7 +1,7 @@
 $("#sell").submit(function(e) {
 	e.preventDefault();
 
-	data = {"dest": 1, "operation": 1, "year": year, "month": month, "day": day, "time": time};
+	data = {"destination": 1, "operation": 1, "year": year, "month": month, "day": day, "time": time};
 	$(this).serializeArray().map(function(x){data[x.name] = parseInt(x.value);}); 
 	data = JSON.stringify(data);
 
@@ -26,7 +26,7 @@ $("#sell").submit(function(e) {
 $("#return").submit(function(e) {
 	e.preventDefault();
 
-	data = {"dest": 1, "operation": 2, "year": year, "month": month, "day": day, "time": time};
+	data = {"destination": 1, "operation": 2, "year": year, "month": month, "day": day, "time": time};
 	$(this).serializeArray().map(function(x){data[x.name] = parseInt(x.value);});
 	data = JSON.stringify(data);
 

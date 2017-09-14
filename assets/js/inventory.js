@@ -5,7 +5,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		
 		data = {
-			"dest": 2,
+			"destination": 2,
 			"operation": (modifyingInv ? 3 : 2),
 			"year": year,
 			"month": month,
@@ -115,7 +115,7 @@ function update() {
 function display() {
 	$.post(
 		'./assets/API/api.cgi',
-		JSON.stringify({"dest": 2, "operation": 1}),
+		JSON.stringify({"destination": 2, "operation": 1}),
 		function(response) {
 			$("#display").html('');
 			$.each(response, function(i, inv) {
