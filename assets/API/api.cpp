@@ -51,7 +51,7 @@ private:
 
 		record["finance"].push_back(
 		{
-			{"name", "Sell Auto Record"},
+			{"name", "Sell Record"},
 			{"income", record["items"][index]["salePrice"]},
 			{"expenditure", 0},
 			{"date", 
@@ -63,17 +63,18 @@ private:
 			}
 		});
 
+		double points = record["items"][index]["salePrice"];
+
 		index = request["customerID"];
-		double totalPoints = record["customers"][index]["totalPoints"], points = record["items"][index]["salePrice"];
-		points *= rate;
+		double totalPoints = record["customers"][index]["totalPoints"];
 
 		record["customers"][index]["purchases"].push_back(
 		{
 			{"purchaseTime", request["time"]},
-			{"payment", points / rate},
-			{"points", points}
+			{"payment", points},
+			{"points", points * rate}
 		});
-		record["customers"][index]["totalPoints"] = totalPoints + points;
+		record["customers"][index]["totalPoints"] = totalPoints + points * rate;
 
 		response ={{"code", 0}};
 		cout << response;
@@ -88,7 +89,7 @@ private:
 
 		record["finance"].push_back(
 		{
-			{"name", "Return Auto Record"},
+			{"name", "Return Record"},
 			{"income", 0},
 			{"expenditure", record["items"][index]["salePrice"]},
 			{"date", 
@@ -100,17 +101,19 @@ private:
 			}
 		});
 
+		double points = record["items"][index]["salePrice"];
+
 		index = request["customerID"];
-		double totalPoints = record["customers"][index]["totalPoints"], points = record["items"][index]["salePrice"];
-		points *= - rate;
+		double totalPoints = record["customers"][index]["totalPoints"];
+		points = - points;
 
 		record["customers"][index]["purchases"].push_back(
 		{
 			{"purchaseTime", request["time"]},
-			{"payment", points / rate},
-			{"points", points}
+			{"payment", points},
+			{"points", points * rate}
 		});
-		record["customers"][index]["totalPoints"] = totalPoints + points;
+		record["customers"][index]["totalPoints"] = totalPoints + points * rate;
 
 		response ={{"code", 0}};
 		cout << response;
@@ -161,7 +164,7 @@ private:
 		double amount = request["inventoryQuantity"], price = request["price"];
 		record["finance"].push_back(
 		{
-			{"name", "Inventory Auto Record"},
+			{"name", "Inventory Add Record"},
 			{"income", 0},
 			{"expenditure", amount * price},
 			{"date", 
@@ -211,7 +214,7 @@ private:
 		double amount = request["inventoryQuantity"], price = request["price"];
 		record["finance"].push_back(
 		{
-			{"name", "Inventory Auto Record"},
+			{"name", "Inventory Update Record"},
 			{"income", 0},
 			{"expenditure", amount * price},
 			{"date", 
