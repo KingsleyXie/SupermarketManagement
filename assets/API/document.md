@@ -8,7 +8,7 @@
 - brand 商标
 - name 商品名
 - unspsc 分类
-- dest 规格
+- type 规格
 - price 进货价
 - expiredTime 过期时间
 - threshold 阈值
@@ -35,8 +35,8 @@
 
 ### suppliers
 - supplierID 主键ID    //作为数组索引，不做实际存储
-- supplier 供货商
-- transaction 交易记录
+- supplierName 供货商
+- transactions 交易记录
   - transactionTime 交易时间
   - itemID 商品ID
   - itemName 商品名称
@@ -66,28 +66,30 @@
 ## Part B: Class Structure
 ### Base Class: DATA
 
-### request["dest"] == 1
+### request["destination"] == 1
 - Sales
     - sell_item()                                    // request["operation"] == 1
     - return_item()                               // request["operation"] == 2
 
-### request["dest"] == 2
+### request["destination"] == 2
 - Inventory
     - display()                            // request["operation"] == 1
     - add()                                 // request["operation"] == 2
     - update()                            // request["operation"] == 3
-### request["dest"] == 3
+
+### request["destination"] == 3
 - Staff
     - display()                           // request["operation"] == 1
     - add()                                // request["operation"] == 2
     - update()                           // request["operation"] == 3
 
-### request["dest"] == 4
+### request["destination"] == 4
 - Finance
     - display()                            // request["operation"] == 1
     - add()                                 // request["operation"] == 2
 
-### request["dest"] == 5
+### request["destination"] == 5
 - Report
     - finance_data()                            // request["operation"] == 1
-    - clients_data()                             // request["operation"] == 2
+    - suppliers_data()                             // request["operation"] == 2
+    - customers_data()                             // request["operation"] == 3
