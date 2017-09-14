@@ -1,4 +1,4 @@
-function suppliersPY() {
+function suppliers() {
 	$.post(
 		'./assets/API/api.cgi',
 		JSON.stringify({"destination": 5, "operation": 2}),
@@ -9,7 +9,7 @@ function suppliersPY() {
 				$.each(response, function(i, supplier) {
 					$("#display").append(
 					'<div class="card">' +
-						'<div class="card-content">' +
+						'<div class="card-content" id="table' + i + '">' +
 							'<table class="highlight">' +
 								'<thead>' +
 									'<tr>' +
@@ -24,24 +24,29 @@ function suppliersPY() {
 									'</tr>' +
 								'</tbody>' +
 							'</table>' +
-							'<div class="card-content subtable">' +
-								'<table class="highlight responsive-table">' +
-									'<thead>' +
-										'<tr>' +
-											'<th>交易时间</th>' +
-											'<th>商品ID</th>' +
-											'<th>商品名称</th>' +
-											'<th>商品数量</th>' +
-											'<th>商品单价</th>' +
-										'</tr>' +
-									'</thead>' +
-									'<tbody id="py-details' + i + '"></tbody>' +
-								'</table>' +
-							'</div>' +
 						'</div>' +
 					'</div>');
+
+					if (supplier.transactions.length) {
+						$("#table" + i).append(
+						'<div class="card-content subtable">' +
+							'<table class="highlight responsive-table">' +
+								'<thead>' +
+									'<tr>' +
+										'<th>交易时间</th>' +
+										'<th>商品ID</th>' +
+										'<th>商品名称</th>' +
+										'<th>商品数量</th>' +
+										'<th>商品单价</th>' +
+									'</tr>' +
+								'</thead>' +
+								'<tbody id="subtable' + i + '"></tbody>' +
+							'</table>' +
+						'</div>');
+					}
+
 					$.each(supplier.transactions, function(t, transaction) {
-						$("#py-details" + i).append(
+						$("#subtable" + i).append(
 						'<tr>' +
 							'<td>' + transaction.transactionTime + '</td>' +
 							'<td>' + transaction.itemID + '</td>' +
@@ -61,7 +66,7 @@ function suppliersPY() {
 	});
 }
 
-function customersPY() {
+function customers() {
 	$.post(
 		'./assets/API/api.cgi',
 		JSON.stringify({"destination": 5, "operation": 3}),
@@ -72,7 +77,7 @@ function customersPY() {
 				$.each(response, function(i, customer) {
 					$("#display").append(
 					'<div class="card">' +
-						'<div class="card-content">' +
+						'<div class="card-content" id="table' + i + '">' +
 							'<table class="highlight">' +
 								'<thead>' +
 									'<tr>' +
@@ -91,22 +96,27 @@ function customersPY() {
 									'</tr>' +
 								'</tbody>' +
 							'</table>' +
-							'<div class="card-content subtable">' +
-								'<table class="highlight responsive-table">' +
-									'<thead>' +
-										'<tr>' +
-											'<th>购物时间</th>' +
-											'<th>付款</th>' +
-											'<th>积分</th>' +
-										'</tr>' +
-									'</thead>' +
-									'<tbody id="py-details' + i + '"></tbody>' +
-								'</table>' +
-							'</div>' +
 						'</div>' +
 					'</div>');
+
+					if (customer.purchases.length) {
+						$("#table" + i).append(
+						'<div class="card-content subtable">' +
+							'<table class="highlight responsive-table">' +
+								'<thead>' +
+									'<tr>' +
+										'<th>购物时间</th>' +
+										'<th>付款</th>' +
+										'<th>积分</th>' +
+									'</tr>' +
+								'</thead>' +
+								'<tbody id="subtable' + i + '"></tbody>' +
+							'</table>' +
+						'</div>');
+					}
+
 					$.each(customer.purchases, function(t, purchase) {
-						$("#py-details" + i).append(
+						$("#subtable" + i).append(
 						'<tr>' +
 							'<td>' + purchase.purchaseTime + '</td>' +
 							'<td>' + purchase.payment + '</td>' +
