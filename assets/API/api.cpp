@@ -210,7 +210,7 @@ private:
 		index = request["itemID"];
 		record["items"][index] =
 		{
-			{"barcode", request["barcode"]},
+			{"barcode", record["items"][index]["barcode"]},
 			{"brand", request["brand"]},
 			{"name", request["name"]},
 			{"type", request["type"]},
