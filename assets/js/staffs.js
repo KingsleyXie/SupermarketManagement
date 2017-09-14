@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 		data = {"destination": 3, "operation": (modifyingStaff ? 3 : 2)};
 		$(this).serializeArray().map(function(x){data[x.name] = x.value;});
-		data["staffID"] = parseFloat($("#ID").val());
+		data["staffID"] = parseInt($("#ID").val());
 		data["salary"] = parseFloat(data["salary"]);
 		data = JSON.stringify(data);
 
@@ -72,6 +72,7 @@ function display() {
 		JSON.stringify({"destination": 3, "operation": 1}),
 		function(response) {
 			$("#display").html('');
+			$("#ID").attr("max", response.length - 1);
 			$.each(response, function(i, staff) {
 				$("#display").append(
 					'<tr id="ID' + i + '">' +
