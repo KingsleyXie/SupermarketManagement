@@ -6,7 +6,7 @@ function suppliersPY() {
 			$("#display").hide(600);
 			setTimeout(function () {
 				$("#display").html('');
-				$.each(response.suppliers, function(index, supplier) {
+				$.each(response, function(i, supplier) {
 					$("#display").append(
 					'<div class="card">' +
 						'<div class="card-content">' +
@@ -19,8 +19,8 @@ function suppliersPY() {
 								'</thead>' +
 								'<tbody>' +
 									'<tr>' +
-										'<td>' + index + '</td>' +
-										'<td>' + supplier.supplier + '</td>' +
+										'<td>' + i + '</td>' +
+										'<td>' + supplier.supplierName + '</td>' +
 									'</tr>' +
 								'</tbody>' +
 							'</table>' +
@@ -35,13 +35,13 @@ function suppliersPY() {
 											'<th>商品单价</th>' +
 										'</tr>' +
 									'</thead>' +
-									'<tbody id="py-details' + index + '"></tbody>' +
+									'<tbody id="py-details' + i + '"></tbody>' +
 								'</table>' +
 							'</div>' +
 						'</div>' +
 					'</div>');
-					$.each(supplier.transaction, function(i, transaction) {
-						$("#py-details" + index).append(
+					$.each(supplier.transactions, function(t, transaction) {
+						$("#py-details" + i).append(
 						'<tr>' +
 							'<td>' + transaction.transactionTime + '</td>' +
 							'<td>' + transaction.itemID + '</td>' +
@@ -64,12 +64,12 @@ function suppliersPY() {
 function customersPY() {
 	$.post(
 		'./assets/API/api.cgi',
-		JSON.stringify({"destination": 5, "operation": 2}),
+		JSON.stringify({"destination": 5, "operation": 3}),
 		function(response) {
 			$("#display").hide(600);
 			setTimeout(function () {
 				$("#display").html('');
-				$.each(response.customers, function(index, customer) {
+				$.each(response, function(i, customer) {
 					$("#display").append(
 					'<div class="card">' +
 						'<div class="card-content">' +
@@ -84,7 +84,7 @@ function customersPY() {
 								'</thead>' +
 								'<tbody>' +
 									'<tr>' +
-										'<td>' + index + '</td>' +
+										'<td>' + i + '</td>' +
 										'<td>' + customer.customerName + '</td>' +
 										'<td>' + customer.customerNo + '</td>' +
 										'<td>' + customer.totalPoints + '</td>' +
@@ -100,13 +100,13 @@ function customersPY() {
 											'<th>积分</th>' +
 										'</tr>' +
 									'</thead>' +
-									'<tbody id="py-details' + index + '"></tbody>' +
+									'<tbody id="py-details' + i + '"></tbody>' +
 								'</table>' +
 							'</div>' +
 						'</div>' +
 					'</div>');
-					$.each(customer.purchases, function(i, purchase) {
-						$("#py-details" + index).append(
+					$.each(customer.purchases, function(t, purchase) {
+						$("#py-details" + i).append(
 						'<tr>' +
 							'<td>' + purchase.purchaseTime + '</td>' +
 							'<td>' + purchase.payment + '</td>' +

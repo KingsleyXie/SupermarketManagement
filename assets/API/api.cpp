@@ -378,14 +378,14 @@ private:
 
 	int suppliers_data()
 	{
-		response["suppliers"] = record["suppliers"];
+		response = record["suppliers"];
 		cout << response;
 		return 0;
 	}
 
 	int customers_data()
 	{
-		response["customers"] = record["customers"];
+		response = record["customers"];
 		cout << response;
 		return 0;
 	}
