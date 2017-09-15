@@ -13,4 +13,6 @@ You'll need a program which can execute CGI if you need to deploy it on your ser
   - Options +ExecCGI
   - AddHandler cgi-script .cgi
 
+**Preview pictures can be found in [`./assets/pictures/preview`](./assets/pictures/preview)**
+
 ### Special thanks to [Materialize](https://github.com/Dogfalo/materialize) and [JSON for C++](https://github.com/nlohmann/json).
