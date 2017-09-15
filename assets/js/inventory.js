@@ -53,16 +53,10 @@ $(document).ready(function() {
 
 function getDataFromAPI() {
 	$("#progress").show();
-	$.ajax({
-		type: 'GET',
-		url: 'http://jisutxmcx.market.alicloudapi.com/barcode2/query',
-		headers: {
-			'Authorization':'APPCODE your_APPCODE_here'
-			// Add your APPCODE here, you can get it on
-			// https://market.aliyun.com/products/56928004/cmapi011806.html
-		},
-		data: 'barcode=' + $("#barcode").val(),
-		success: function(response) {
+	$.post(
+		'./assets/API/inventoryAPI.php',
+		'barcode=' + $("#barcode").val(),
+		function(response) {
 			if (response.status == 0) {
 				$("#brand").val(response.result.brand);
 				$("#name").val(response.result.name);
@@ -79,13 +73,16 @@ function getDataFromAPI() {
 				window.setTimeout(function () {
 					$("#inventory-quantity").focus();
 				}, 0);
+			} else {
+				Materialize.toast("未找到商品信息，请手动录入数据", 1700);
+				toggle();
 			}
-		},
-
-		error: function() {
-			Materialize.toast("未找到商品信息，请手动录入数据", 1700);
-			toggle();
 		}
+	)
+
+	.fail(function() {
+		Materialize.toast("获取数据失败，请手动录入数据", 1700);
+		toggle();
 	});
 }
 
