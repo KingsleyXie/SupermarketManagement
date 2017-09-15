@@ -33,20 +33,35 @@ var chart = [
 			fontSize: 30,
 			verticalAlign: 'center'
 		}],
+		toolTip:{ shared: true },
+		axisX:{
+			labelFormatter: function(){return "";},
+			tickLength: 0,
+		},
 		data: [{
-			type: 'column',
-			color: '#00e5ff',
+			type: 'scatter',
+			color: '#ff7043',
+			name: '收入',
 			showInLegend: true,
 			legendText: '收入金额',
-			indexLabel: "{y}",
 			dataPoints: []
 		},
 		{
-			type: 'column',
-			color: '#ff7043',
+			type: 'scatter',
+			color: '#00e5ff',
+			name: '支出',
 			showInLegend: true,
 			legendText: '支出金额',
-			indexLabel: "{y}",
+			dataPoints: []
+		},
+		{
+			type: 'line',
+			markerType: "none",
+			lineDashType: "longDashDotDot",
+			color: '#29b6f6',
+			name: '小计',
+			showInLegend: true,
+			legendText: '小计',
 			dataPoints: []
 		}]
 	}),
@@ -74,25 +89,32 @@ var chart = [
 	new CanvasJS.Chart("chart5", {
 		zoomEnabled:true,
 		title: { text: year + '年' + month + '月财务报表' },
+		toolTip: { shared: true },
 		data: [{
-			type: 'line',
-			color: '#00e5ff',
+			type: 'splineArea',
+			color: '#ff7043',
+			name: '收入',
 			showInLegend: true,
 			legendText: '收入金额',
 			dataPoints: []
 		},
 		{
-			type: 'line',
-			color: '#ff7043',
+			type: 'splineArea',
+			color: '#00e5ff',
+			name: '支出',
 			showInLegend: true,
 			legendText: '支出金额',
 			dataPoints: []
 		},
 		{
-			type: 'line',
+			type: 'spline',
+			markerType: "square",
 			color: '#42a5f5',
+			name: '总计',
 			showInLegend: true,
 			legendText: '总金额',
+			indexLabel: '{y}',
+			indexLabelFontColor: "#42a5f5",
 			dataPoints: []
 		}]
 	}),
@@ -123,7 +145,7 @@ $(document).ready(function() {
 					dp(3, 0)[f.date.day - 1].y += f.income;
 					dp(4, 0)[f.date.day - 1].y += f.expenditure;
 					dp(5, 0)[f.date.day - 1].y += f.income;
-					dp(5, 1)[f.date.day - 1].y += f.expenditure;
+					dp(5, 1)[f.date.day - 1].y -= f.expenditure;
 					dp(5, 2)[f.date.day - 1].y += (f.income - f.expenditure);
 
 					if (f.date.day == day) {
@@ -135,15 +157,16 @@ $(document).ready(function() {
 						dp(1, 0).push({ y: f.expenditure, indexLabel: f.name }) : '';						
 					
 						dp(2, 0).push({ y: f.income, label: f.name });
-						dp(2, 1).push({ y: f.expenditure, label: f.name });
+						dp(2, 1).push({ y: - f.expenditure, label: f.name });
+						dp(2, 2).push({ y: f.income - f.expenditure, label: f.name });
 					}
 				}
 			});
 
-			if (dp(0, 0).length) chart[0].options.subtitles[0].text = '';
-			if (dp(1, 0).length) chart[1].options.subtitles[0].text = '';
-			if (dp(2, 0).length || dp(2, 1).length)
-				chart[2].options.subtitles[0].text = '';
+			for (var i = 0; i < 3; i++) {
+				if (dp(i, 0).length)
+					chart[i].options.subtitles[0].text = '';
+			}
 
 			$("#loading").hide();
 			for (var i = 0; i < 6; i++) {
