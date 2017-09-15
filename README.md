@@ -16,3 +16,8 @@ You'll need a program which can execute CGI if you need to deploy it on your ser
 **Preview pictures can be found in [`./assets/pictures/preview`](./assets/pictures/preview)**
 
 ### Special thanks to [Materialize](https://github.com/Dogfalo/materialize) and [JSON for C++](https://github.com/nlohmann/json).
+
+***
+### https-solution: Version 0.0
+
+Since the host of inventory API does not provide a `https` request method, if you deploy this system on a https-only website, most browsers will prevent you from sending the request. To Solve the problem, this branch uses PHP to send the request instead of using Javascript directly, and at the same time it prevents your APPCODE from being leaked to visitors.
