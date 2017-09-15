@@ -56,7 +56,8 @@ var chart = [
 		},
 		{
 			type: 'line',
-			markerType: "none",
+			markerType: "cross",
+			markerSize: 5,
 			lineDashType: "longDashDotDot",
 			color: '#29b6f6',
 			name: '小计',

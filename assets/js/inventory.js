@@ -68,7 +68,11 @@ function getDataFromAPI() {
 				$("#name").val(response.result.name);
 				$("#unspsc").val(response.result.unspsc);
 				$("#type").val(response.result.type);
-				$("#price").val(response.result.price.replace('￥', ''));
+
+				if (typeof response.result.price != 'undefined') {
+					$("#price").val(response.result.price.replace('￥', ''));
+				}
+
 				$("label").addClass("active");
 
 				toggle();
