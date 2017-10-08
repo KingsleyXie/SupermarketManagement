@@ -166,8 +166,15 @@ $(document).ready(function() {
 				}
 			});
 
+			if (window.screen.width <= 992 || day >= 17) {
+				chart[3].options.data[0].indexLabel = '';
+				chart[4].options.data[0].indexLabel = '';
+				chart[5].options.data[2].indexLabel = '';
+			}
+
 			for (var i = 0; i < 3; i++)
-				if (dp(i, 0).length) chart[i].options.subtitles[0].text = '';
+				if (dp(i, 0).length)
+					chart[i].options.subtitles[0].text = '';
 
 			$("#loading").hide();
 			for (var i = 0; i < 6; i++) {
