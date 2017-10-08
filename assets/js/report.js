@@ -133,15 +133,17 @@ $(document).ready(function() {
 		function(response) {
 			//Initialize Data Of Monthly Report Chart
 			for (var i = 1; i <= day; i++) {
-				new Array(dp(3,0), dp(4,0), dp(5,0), dp(5,1), dp(5,2)).
-				forEach(function(d) {
+				new Array(dp(3,0), dp(4,0), dp(5,0), dp(5,1), dp(5,2))
+				.forEach(function(d) {
 					d.push({ x: i, y: 0, label: i });
 				})
 			}
 
 			$.each(response, function(i, f) {
 				//Iterate Each Finance Data As 'f'
-				if (f.date.year == year && f.date.month == month) {
+				if (f.date.year == year
+					&& f.date.month == month
+					&& f.date.day <= day) {
 					//Summarize Monthly Report Data
 					dp(3, 0)[f.date.day - 1].y += f.income;
 					dp(4, 0)[f.date.day - 1].y += f.expenditure;
@@ -164,10 +166,8 @@ $(document).ready(function() {
 				}
 			});
 
-			for (var i = 0; i < 3; i++) {
-				if (dp(i, 0).length)
-					chart[i].options.subtitles[0].text = '';
-			}
+			for (var i = 0; i < 3; i++)
+				if (dp(i, 0).length) chart[i].options.subtitles[0].text = '';
 
 			$("#loading").hide();
 			for (var i = 0; i < 6; i++) {
