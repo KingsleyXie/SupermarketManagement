@@ -1,8 +1,11 @@
 # Supermarket Management
 
-### This is an online or local manage system for supermarkets, you can experience the system [here](https://kingsleyxie.cn/supermarket-management/)
+### This is an online or local manage system for supermarkets, you can experience the system [here](https://projects.kingsleyxie.cn/supermarket-management/)
 
-To compile the C++ code into a CGI file which is used in this system, you need to make sure your compiler supports C++11 Standard: `g++ -std=c++11 -o api.cgi api.cpp`
+To compile the C++ code into a CGI file which is used in this system, you need to make sure your compiler supports C++11 Standard:
+```
+$ g++ -std=c++11 -o api.cgi api.cpp
+```
 
 If you are trapped with compile process because of the `index` variable, you might need to change it to something else: `:%s/index/indexn/g`
 

@@ -190,5 +190,9 @@ $(document).ready(function() {
 				})(i);
 			}
 		}
-	);
+	)
+	
+	.fail(function() {
+		Materialize.toast('获取数据出错', 3000);
+	});
 });
