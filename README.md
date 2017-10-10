@@ -2,23 +2,25 @@
 
 ### This is an online or local manage system for supermarkets, you can experience the system [here](https://projects.kingsleyxie.cn/supermarket-management/)
 
-To compile the C++ code into a CGI file which is used in this system, you need to make sure your compiler supports C++11 Standard:
+To compile the C++ code into a FastCGI application which is used in this system, you need to make sure your compiler supports C++11 Standard and [`fastcgi`](https://github.com/iriscouch/fastcgi) is correctly installed, then you can make the compile operation with:
 ```
-$ g++ -std=c++11 -o api.cgi api.cpp
+$ g++ -std=c++11 -o api.cgi api.cpp -lfcgi++ -lfcgi
 ```
 
 If you are trapped with compile process because of the `index` variable, you might need to change it to something else: `:%s/index/indexn/g`
 
+To run the compiled FastCGI program as a service you'll need to install [`spawn-fcgi`](https://github.com/lighttpd/spawn-fcgi), and spawn the FastCGI application to listen a local port (`8081` for example here):
+```
+$ spawn-fcgi -a 127.0.0.1 -p 8081 -f /file_directory/api.cgi
+```
+
+It is recommended to check whether the service started successfully: `netstat -nap | grep 8081`
+
 Moreover, sufficient access permission is needed for reading and writing data to file: `chmod 666 data.json`
-
-You'll need a program which can execute CGI if you need to deploy it on your server or experience locally, if `Apache` is chosen by you, add following options in the corresponding location (`<Directory "/var/www/html">` part for example) of `httpd.conf` configuration file:
-
-  - Options +ExecCGI
-  - AddHandler cgi-script .cgi
 
 **Preview pictures can be found in [`./assets/pictures/preview`](./assets/pictures/preview)**
 
-### Special thanks to [Materialize](https://github.com/Dogfalo/materialize) and [JSON for C++](https://github.com/nlohmann/json).
+### Special thanks to [Materialize](https://github.com/Dogfalo/materialize) and [JSON for C++](https://github.com/nlohmann/json), besides, this FastCGI version was deeply helped by a [blog](http://chriswu.me/blog/getting-request-uri-and-content-in-c-plus-plus-fcgi/).
 
 ***
 
