@@ -53,6 +53,50 @@ $(document).ready(function() {
 
 function getDataFromAPI() {
 	$("#progress").show();
+	$.post(
+		'./assets/API/inventoryAPI.php',
+		'barcode=' + $("#barcode").val(),
+		function(response) {
+			if (response.status == 0) {
+				$("#brand").val(response.result.brand);
+				$("#name").val(response.result.name);
+				$("#unspsc").val(response.result.unspsc);
+				$("#type").val(response.result.type);
+
+				if (typeof response.result.price != 'undefined') {
+					$("#price").val(response.result.price.replace('￥', ''));
+				}
+
+				$("label").addClass("active");
+
+				toggle();
+				window.setTimeout(function () {
+					$("#inventory-quantity").focus();
+				}, 0);
+			} else {
+				Materialize.toast("未找到商品信息，请手动录入数据", 1700);
+				toggle();
+			}
+		}
+	)
+
+	.fail(function() {
+		Materialize.toast("获取数据失败，请手动录入数据", 1700);
+		toggle();
+	});
+}
+
+/*
+// Note: Following code is an old version API handler 
+// which sends request and process the response data using Javascript only,
+// if you don't like the current PHP version or can't run PHP code on your server
+// you can uncomment this previous version and delete the same-name function above,
+// and actually, the update of this function was intended to solve problem on https-only sites,
+// after all, url of the API is `http` instead of `https`
+
+
+function getDataFromAPI() {
+	$("#progress").show();
 	$.ajax({
 		type: 'GET',
 		url: 'http://jisutxmcx.market.alicloudapi.com/barcode2/query',
@@ -88,6 +132,7 @@ function getDataFromAPI() {
 		}
 	});
 }
+*/
 
 function update() {
 	modifyingInv = true;
