@@ -176,7 +176,6 @@ $(document).ready(function() {
 				if (dp(i, 0).length)
 					chart[i].options.subtitles[0].text = '';
 
-			$("#loading").hide();
 			for (var i = 0; i < 6; i++) {
 				//Set Data To Charts And Render Them
 				chart[i].options.animationEnabled = true;
@@ -195,4 +194,6 @@ $(document).ready(function() {
 	.fail(function() {
 		Materialize.toast('获取数据出错', 3000);
 	});
+
+	$("#loading").hide();
 });

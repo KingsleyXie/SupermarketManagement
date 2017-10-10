@@ -1,3 +1,4 @@
+$("#loading").hide();
 limitSet();
 
 $("#sell").submit(function(e) {

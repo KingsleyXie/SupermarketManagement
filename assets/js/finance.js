@@ -54,4 +54,6 @@ function display() {
 	.fail(function() {
 		Materialize.toast('获取数据出错', 3000);
 	});
+	
+	$("#loading").hide();
 }

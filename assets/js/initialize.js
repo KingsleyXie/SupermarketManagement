@@ -2,8 +2,6 @@ $(".modal").modal();
 $("select").material_select();
 $(".button-collapse").sideNav();
 
-$("#loading").hide();
-
 var date = new Date(),
 	year = date.getFullYear(),
 	month = date.getMonth() + 1,
