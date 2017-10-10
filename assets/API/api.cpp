@@ -1,6 +1,10 @@
 #include <iostream>
+#include <fcgi_stdio.h>
+#include <cstdlib>
 #include <fstream>
+#include <string>
 #include "json.hpp"
+#include "fcgio.h"
 using namespace std;
 using json = nlohmann::json;
 
@@ -407,22 +411,92 @@ private:
 	}
 };
 
+
+
+// Function to get request POST data
+// Source: http://chriswu.me/blog/getting-request-uri-and-content-in-c-plus-plus-fcgi/
+// Actually all FastCGI-Related code below are from this site
+const unsigned long STDIN_MAX = 1000000;
+
+string get_request_content(const FCGX_Request & request) {
+    char * content_length_str = FCGX_GetParam("CONTENT_LENGTH", request.envp);
+    unsigned long content_length = STDIN_MAX;
+
+    if (content_length_str) {
+        content_length = strtol(content_length_str, &content_length_str, 10);
+        if (*content_length_str) {
+            cerr << "Can't Parse 'CONTENT_LENGTH='"
+                 << FCGX_GetParam("CONTENT_LENGTH", request.envp)
+                 << "'. Consuming stdin up to " << STDIN_MAX << endl;
+        }
+
+        if (content_length > STDIN_MAX) {
+            content_length = STDIN_MAX;
+        }
+    } else {
+        // Do not read from stdin if CONTENT_LENGTH is missing
+        content_length = 0;
+    }
+
+    char * content_buffer = new char[content_length];
+    cin.read(content_buffer, content_length);
+    content_length = cin.gcount();
+
+    // Chew up any remaining stdin - this shouldn't be necessary
+    // but is because mod_fastcgi doesn't handle it correctly.
+
+    // ignore() doesn't set the eof bit in some versions of glibc++
+    // so use gcount() instead of eof()...
+    do cin.ignore(1024); while (cin.gcount() == 1024);
+
+    string content(content_buffer, content_length);
+    delete [] content_buffer;
+    return content;
+}
+
 int main(int argc, char const *argv[])
 {
-	cin >> request;
-	cout<<"Content-type: application/json\n\n";
+	// Backup the stdio streambufs
+	streambuf * cin_streambuf  = cin.rdbuf();
+	streambuf * cout_streambuf = cout.rdbuf();
+	streambuf * cerr_streambuf = cerr.rdbuf();
 
-	destination = request["destination"];
-	operation = request["operation"];
+	FCGX_Request req;
 
-	switch (destination)
-	{
-		case 1: { Sales obj(request); } break;
-		case 2: { Inventory obj(request); } break;
-		case 3: { Staff obj(request); } break;
-		case 4: { Finance obj(request); } break;
-		case 5: { Report obj(request); } break;
+	FCGX_Init();
+	FCGX_InitRequest(&req, 0, 0);
+
+	while (FCGX_Accept_r(&req) == 0) {
+		fcgi_streambuf cin_fcgi_streambuf(req.in);
+		fcgi_streambuf cout_fcgi_streambuf(req.out);
+		fcgi_streambuf cerr_fcgi_streambuf(req.err);
+
+		cin.rdbuf(&cin_fcgi_streambuf);
+		cout.rdbuf(&cout_fcgi_streambuf);
+		cerr.rdbuf(&cerr_fcgi_streambuf);
+
+		string content = get_request_content(req);
+
+		cout << "Content-Type: application/json\n\n";
+
+		json request = json::parse(content);
+
+		destination = request["destination"];
+		operation = request["operation"];
+
+		switch (destination)
+		{
+			case 1: { Sales obj(request); } break;
+			case 2: { Inventory obj(request); } break;
+			case 3: { Staff obj(request); } break;
+			case 4: { Finance obj(request); } break;
+			case 5: { Report obj(request); } break;
+		}
 	}
 
+	// Restore stdio streambufs
+	cin.rdbuf(cin_streambuf);
+	cout.rdbuf(cout_streambuf);
+	cerr.rdbuf(cerr_streambuf);
 	return 0;
 }
