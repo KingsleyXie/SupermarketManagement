@@ -7,8 +7,6 @@ To compile the C++ code into a CGI file which is used in this system, you need t
 $ g++ -std=c++11 -o api.cgi api.cpp
 ```
 
-If you are trapped with compile process because of the `index` variable, you might need to change it to something else: `:%s/index/indexn/g`
-
 Moreover, sufficient access permission is needed for reading and writing data to file: `chmod 666 data.json`
 
 You'll need a program which can execute CGI if you need to deploy it on your server or experience locally, if `Apache` is chosen by you, add following options in the corresponding location (`<Directory "/var/www/html">` part for example) of `httpd.conf` configuration file:

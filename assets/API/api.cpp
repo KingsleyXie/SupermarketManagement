@@ -7,7 +7,7 @@ using json = nlohmann::json;
 fstream data; // File with all the data of this system
 json request, response, record; // JSON for request, response and existed data record
 double rate = 1.5; // Rate from payment to points
-int destination, operation, index; // Request Judgement, Shunt and JSON data array index
+int destination, operation, data_index; // Request Judgement, Shunt and JSON data array index
 
 class DATA
 // Base class of the whole program
@@ -46,14 +46,14 @@ public:
 private:
 	int sell_item()
 	{
-		index = request["itemID"];
-		int inventoryQuantity = record["items"][index]["inventoryQuantity"];
-		record["items"][index]["inventoryQuantity"] = inventoryQuantity - 1;
+		data_index = request["itemID"];
+		int inventoryQuantity = record["items"][data_index]["inventoryQuantity"];
+		record["items"][data_index]["inventoryQuantity"] = inventoryQuantity - 1;
 
 		record["finance"].push_back(
 		{
 			{"name", "Sell Record"},
-			{"income", record["items"][index]["salePrice"]},
+			{"income", record["items"][data_index]["salePrice"]},
 			{"expenditure", 0},
 			{"date", 
 				{
@@ -64,18 +64,18 @@ private:
 			}
 		});
 
-		double points = record["items"][index]["salePrice"];
+		double points = record["items"][data_index]["salePrice"];
 
-		index = request["customerID"];
-		double totalPoints = record["customers"][index]["totalPoints"];
+		data_index = request["customerID"];
+		double totalPoints = record["customers"][data_index]["totalPoints"];
 
-		record["customers"][index]["purchases"].push_back(
+		record["customers"][data_index]["purchases"].push_back(
 		{
 			{"purchaseTime", request["time"]},
 			{"payment", points},
 			{"points", points * rate}
 		});
-		record["customers"][index]["totalPoints"] = totalPoints + points * rate;
+		record["customers"][data_index]["totalPoints"] = totalPoints + points * rate;
 
 		response ={{"code", 0}};
 		cout << response;
@@ -84,15 +84,15 @@ private:
 
 	int return_item()
 	{
-		index = request["itemID"];
-		int inventoryQuantity = record["items"][index]["inventoryQuantity"];
-		record["items"][index]["inventoryQuantity"] = inventoryQuantity + 1;
+		data_index = request["itemID"];
+		int inventoryQuantity = record["items"][data_index]["inventoryQuantity"];
+		record["items"][data_index]["inventoryQuantity"] = inventoryQuantity + 1;
 
 		record["finance"].push_back(
 		{
 			{"name", "Return Record"},
 			{"income", 0},
-			{"expenditure", record["items"][index]["salePrice"]},
+			{"expenditure", record["items"][data_index]["salePrice"]},
 			{"date", 
 				{
 					{"year", request["year"]},
@@ -102,19 +102,19 @@ private:
 			}
 		});
 
-		double points = record["items"][index]["salePrice"];
+		double points = record["items"][data_index]["salePrice"];
 
-		index = request["customerID"];
-		double totalPoints = record["customers"][index]["totalPoints"];
+		data_index = request["customerID"];
+		double totalPoints = record["customers"][data_index]["totalPoints"];
 		points = - points;
 
-		record["customers"][index]["purchases"].push_back(
+		record["customers"][data_index]["purchases"].push_back(
 		{
 			{"purchaseTime", request["time"]},
 			{"payment", points},
 			{"points", points * rate}
 		});
-		record["customers"][index]["totalPoints"] = totalPoints + points * rate;
+		record["customers"][data_index]["totalPoints"] = totalPoints + points * rate;
 
 		response ={{"code", 0}};
 		cout << response;
@@ -189,9 +189,9 @@ private:
 			}
 		});
 
-		index = request["supplierID"];
+		data_index = request["supplierID"];
 		int itemID = record["items"].size();
-		record["suppliers"][index]["transactions"].push_back(
+		record["suppliers"][data_index]["transactions"].push_back(
 		{
 			{"transactionTime", request["time"]},
 			{"itemID", itemID},
@@ -207,10 +207,10 @@ private:
 
 	int update()
 	{
-		index = request["itemID"];
-		record["items"][index] =
+		data_index = request["itemID"];
+		record["items"][data_index] =
 		{
-			{"barcode", record["items"][index]["barcode"]},
+			{"barcode", record["items"][data_index]["barcode"]},
 			{"brand", request["brand"]},
 			{"name", request["name"]},
 			{"type", request["type"]},
@@ -220,7 +220,7 @@ private:
 			{"inventoryQuantity", request["inventoryQuantity"]},
 			{"threshold", request["threshold"]},
 			{"expiredTime", request["expiredTime"]},
-			{"importTime", record["items"][index]["importTime"]},
+			{"importTime", record["items"][data_index]["importTime"]},
 			{"updateTime", request["time"]}
 		};
 
@@ -239,8 +239,8 @@ private:
 			}
 		});
 
-		index = request["supplierID"];
-		record["suppliers"][index]["transactions"].push_back(
+		data_index = request["supplierID"];
+		record["suppliers"][data_index]["transactions"].push_back(
 		{
 			{"transactionTime", request["time"]},
 			{"itemID", request["itemID"]},
@@ -303,8 +303,8 @@ private:
 
 	int update()
 	{
-		index = request["staffID"];
-		record["staffs"][index] =
+		data_index = request["staffID"];
+		record["staffs"][data_index] =
 		{
 			{"jobNo", request["jobNo"]},
 			{"name", request["name"]},
